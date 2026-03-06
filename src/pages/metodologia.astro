@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Layout title="Metodología — Academia Dental" description="Conoce el modelo pedagógico de Academia Dental: presencial hands-on, híbrido, práctica clínica y material entregado.">
+
+  <PageHero
+    title="Nuestra Metodología"
+    breadcrumb={[{ label: 'Metodología' }]}
+  />
+
+  <!-- Modelo Presencial Hands-On -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
+          <svg class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-extrabold text-dark mb-4">Modelo Presencial Hands-On</h2>
+        <p class="text-gray-500 leading-relaxed mb-4">
+          Nuestros cursos presenciales se desarrollan en instalaciones clínicas equipadas, donde cada participante trabaja directamente con el instrumental y los materiales del programa. No se aprende solo mirando; se aprende haciendo.
+        </p>
+        <ul class="space-y-3">
+          {['Grupos reducidos (máximo 8-10 participantes)','Supervisión directa de especialistas','Atención de pacientes reales desde el primer módulo','Resolución de casos en tiempo real'].map(item => (
+            <li class="flex items-center gap-3 text-sm text-dark">
+              <svg class="w-4 h-4 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="bg-light rounded-2xl h-72 flex items-center justify-center">
+        <div class="text-center text-gray-400">
+          <svg class="w-16 h-16 mx-auto mb-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <p class="text-sm">Imagen del curso</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modelo Híbrido -->
+  <section class="py-20 px-6 bg-[#F9F9F9]">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div class="order-2 lg:order-1 bg-light rounded-2xl h-72 flex items-center justify-center">
+        <div class="text-center text-gray-400">
+          <svg class="w-16 h-16 mx-auto mb-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          <p class="text-sm">Imagen módulo online</p>
+        </div>
+      </div>
+      <div class="order-1 lg:order-2">
+        <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
+          <svg class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-extrabold text-dark mb-4">Modelo Híbrido</h2>
+        <p class="text-gray-500 leading-relaxed mb-4">
+          La modalidad híbrida combina sesiones teóricas en línea con jornadas prácticas presenciales. Ideal para profesionales que buscan flexibilidad sin sacrificar la calidad clínica.
+        </p>
+        <ul class="space-y-3">
+          {['Módulos teóricos en plataforma online','Sesiones en vivo con el docente','Jornadas presenciales prácticas en sede','Acceso a grabaciones y material digital'].map(item => (
+            <li class="flex items-center gap-3 text-sm text-dark">
+              <svg class="w-4 h-4 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Práctica Clínica -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
+          <svg class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-extrabold text-dark mb-4">Práctica Clínica</h2>
+        <p class="text-gray-500 leading-relaxed mb-4">
+          Todos nuestros programas incluyen jornadas de práctica clínica supervisada en Clínica Milenium. Trabajas con pacientes reales bajo la guía del especialista docente, consolidando técnicas en contextos auténticos.
+        </p>
+        <ul class="space-y-3">
+          {['Clínica habilitada con equipamiento de primer nivel','Pacientes seleccionados según el nivel del programa','Feedback inmediato del docente','Registro fotográfico de casos'].map(item => (
+            <li class="flex items-center gap-3 text-sm text-dark">
+              <svg class="w-4 h-4 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="bg-light rounded-2xl h-72 flex items-center justify-center">
+        <div class="text-center text-gray-400">
+          <svg class="w-16 h-16 mx-auto mb-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <p class="text-sm">Imagen práctica clínica</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Material Entregado -->
+  <section class="py-20 px-6 bg-primary text-white">
+    <div class="max-w-7xl mx-auto text-center mb-12">
+      <h2 class="text-3xl font-extrabold mb-4">Material Entregado</h2>
+      <p class="text-blue-100 max-w-2xl mx-auto">Cada participante recibe un kit completo de materiales para desarrollar el programa y continuar aplicando lo aprendido.</p>
+    </div>
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        { icon: '📋', title: 'Manual del curso', desc: 'Guías clínicas y protocolos actualizados.' },
+        { icon: '🔧', title: 'Instrumental', desc: 'Kit de instrumental específico del programa.' },
+        { icon: '📦', title: 'Materiales clínicos', desc: 'Insumos para la práctica hands-on.' },
+        { icon: '📱', title: 'Acceso digital', desc: 'Plataforma con contenidos y grabaciones.' },
+      ].map(item => (
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center">
+          <div class="text-3xl mb-4">{item.icon}</div>
+          <h4 class="font-bold text-lg mb-2">{item.title}</h4>
+          <p class="text-blue-200 text-sm">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-white text-center">
+    <h3 class="text-2xl font-extrabold text-dark mb-4">¿Quieres conocer los programas disponibles?</h3>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="/cursos" class="bg-primary hover:bg-secondary text-white font-bold px-8 py-3.5 rounded-full transition-colors">Ver Cursos</a>
+      <a href="/contacto" class="border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold px-8 py-3.5 rounded-full transition-colors">Contáctanos</a>
+    </div>
+  </section>
+
+</Layout>

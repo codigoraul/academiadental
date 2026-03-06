@@ -1,0 +1,92 @@
+---
+const navLinks = [
+  { href: '/', label: 'Inicio' },
+  { href: '/cursos', label: 'Cursos' },
+  { href: '/docentes', label: 'Docentes' },
+  { href: '/metodologia', label: 'Metodología' },
+  { href: '/certificacion', label: 'Certificación' },
+  { href: '/contacto', label: 'Contacto' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-white border-b border-light shadow-sm" id="navbar">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center">
+      <img src="/academia-dental.png" alt="Academia Dental" class="h-12 w-auto" />
+    </a>
+
+    <!-- Nav desktop -->
+    <nav class="hidden lg:flex items-center gap-6">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class={`text-base font-medium transition-colors hover:text-secondary ${
+            currentPath === link.href ? 'text-primary border-b-2 border-primary pb-0.5' : 'text-dark'
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- CTA -->
+    <div class="hidden lg:flex items-center gap-3">
+      <a
+        href="/cursos"
+        class="bg-primary text-white px-5 py-2.5 rounded-full text-base font-semibold hover:bg-secondary transition-colors"
+      >
+        Ver Cursos
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="menu-btn" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menú">
+      <span class="w-6 h-0.5 bg-dark transition-all" id="bar1"></span>
+      <span class="w-6 h-0.5 bg-dark transition-all" id="bar2"></span>
+      <span class="w-6 h-0.5 bg-dark transition-all" id="bar3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-light px-4 py-3">
+    <nav class="flex flex-col">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary ${
+            currentPath === link.href ? 'text-primary font-semibold bg-blue-50' : 'text-dark'
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/cursos"
+        class="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-secondary transition-colors text-center mt-2"
+      >
+        Ver Cursos
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+
+  // Sombra en scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      navbar?.classList.add('shadow-md');
+    } else {
+      navbar?.classList.remove('shadow-md');
+    }
+  });
+</script>

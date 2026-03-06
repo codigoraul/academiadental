@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+  breadcrumb?: { label: string; href?: string }[];
+  image?: string;
+  imagePosition?: string;
+}
+
+const {
+  title,
+  breadcrumb = [],
+  image = '/images/bg-title.webp',
+  imagePosition = 'center 70%',
+} = Astro.props;
+---
+
+<section
+  class="relative py-20 px-6 overflow-hidden"
+  style={`background-image: url('${image}'); background-size: cover; background-position: ${imagePosition};`}
+>
+  <!-- Overlay difuminado #2f3142 -->
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(135deg, rgba(47,49,66,0.82) 0%, rgba(47,49,66,0.60) 60%, rgba(47,49,66,0.45) 100%);"
+  ></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto">
+    <!-- Breadcrumb -->
+    {breadcrumb.length > 0 && (
+      <nav class="flex items-center gap-2 text-sm text-white/70 mb-4" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-white transition-colors">Inicio</a>
+        {breadcrumb.map((item, i) => (
+          <>
+            <svg class="w-3.5 h-3.5 text-white/40 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            {item.href && i < breadcrumb.length - 1 ? (
+              <a href={item.href} class="hover:text-white transition-colors">{item.label}</a>
+            ) : (
+              <span class="text-white font-medium">{item.label}</span>
+            )}
+          </>
+        ))}
+      </nav>
+    )}
+
+    <!-- Title -->
+    <h1 class="text-3xl lg:text-[38px]  font-bold text-white leading-tight drop-shadow-sm">
+      {title}
+    </h1>
+  </div>
+</section>

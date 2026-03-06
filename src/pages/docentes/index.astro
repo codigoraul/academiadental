@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TeacherCard from '../../components/TeacherCard.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getDocentes, getFeaturedImage } from '../../lib/wp';
+
+const docentes = await getDocentes();
+---
+
+<Layout title="Docentes — Academia Dental" description="Conoce a nuestros docentes especialistas, referentes en sus áreas de la odontología.">
+
+  <PageHero
+    title="Nuestros Docentes"
+    breadcrumb={[{ label: 'Docentes' }]}
+    image="/images/bg-docentes.webp"
+    imagePosition="center 24%"
+  />
+
+  <section class="py-16 px-6 bg-[#F9F9F9]">
+    <div class="max-w-7xl mx-auto">
+      {docentes.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {docentes.map((docente: any) => (
+            <TeacherCard
+              name={docente.title?.rendered ?? docente.title}
+              slug={docente.slug}
+              image={docente.acf?.foto?.url ?? getFeaturedImage(docente)}
+              cargo={docente.acf?.cargo ?? ''}
+              especialidad={docente.acf?.especialidad ?? ''}
+              bio={docente.acf?.bio_resumida ?? docente.content?.rendered ?? ''}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20 text-gray-400">
+          <p class="text-lg font-medium">Próximamente más docentes disponibles.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+</Layout>

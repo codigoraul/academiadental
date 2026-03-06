@@ -1,0 +1,63 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  image: string;
+  categoria?: string;
+  modalidad?: string;
+  fecha?: string;
+  precio?: string;
+}
+
+const { title, slug, image, categoria, modalidad, fecha, precio } = Astro.props;
+---
+
+<article class="bg-white rounded-2xl shadow-sm border border-light overflow-hidden hover:shadow-md transition-shadow group">
+  <div class="relative h-48 overflow-hidden bg-light">
+    <img
+      src={image}
+      alt={title}
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      loading="lazy"
+    />
+    {categoria && (
+      <span class="absolute top-3 left-3 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full">
+        {categoria}
+      </span>
+    )}
+  </div>
+  <div class="p-5">
+    <h3 class="font-bold text-dark text-lg mb-3 leading-snug group-hover:text-primary transition-colors">
+      {title}
+    </h3>
+    <div class="flex flex-wrap gap-3 text-xs text-gray-500 mb-4">
+      {modalidad && (
+        <span class="flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+          </svg>
+          {modalidad}
+        </span>
+      )}
+      {fecha && (
+        <span class="flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          {fecha}
+        </span>
+      )}
+      {precio && (
+        <span class="flex items-center gap-1 font-semibold text-primary">
+          {precio}
+        </span>
+      )}
+    </div>
+    <a
+      href={`/cursos/${slug}`}
+      class="block w-full text-center bg-primary hover:bg-secondary text-white text-sm font-semibold py-2.5 rounded-xl transition-colors"
+    >
+      Ver más
+    </a>
+  </div>
+</article>

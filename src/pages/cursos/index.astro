@@ -1,0 +1,98 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCursos, getCategoriasCurso, getFeaturedImage } from '../../lib/wp';
+
+const categorias = await getCategoriasCurso();
+const cursos = await getCursos();
+
+const categoriaActiva = Astro.url.searchParams.get('categoria') ?? 'todos';
+
+const cursosFiltrados = categoriaActiva === 'todos'
+  ? cursos
+  : cursos.filter((c: any) => {
+      const slugs = c.curso_categoria_slugs ?? [];
+      return slugs.includes(categoriaActiva);
+    });
+---
+
+<Layout title="Cursos de Odontología — Academia Dental" description="Listado completo de cursos de ortodoncia, rehabilitación, odontología digital y endodoncia.">
+
+  <PageHero
+    title="Nuestros Cursos"
+    breadcrumb={[{ label: 'Cursos' }]}
+    image="/images/cursos.webp"
+    imagePosition="center 90%"
+  />
+
+  <!-- Filtros -->
+  <section class="py-10 px-6 bg-white border-b border-light">
+    <div class="max-w-7xl mx-auto flex flex-wrap gap-3 justify-center">
+      <a
+        href="/cursos"
+        class={`px-5 py-2 rounded-full text-sm font-semibold border-2 transition-colors ${
+          categoriaActiva === 'todos'
+            ? 'bg-primary border-primary text-white'
+            : 'border-primary text-primary hover:bg-primary hover:text-white'
+        }`}
+      >
+        Todos
+      </a>
+      {categorias.map((cat: any) => (
+        <a
+          href={`/cursos?categoria=${cat.slug}`}
+          class={`px-5 py-2 rounded-full text-sm font-semibold border-2 transition-colors ${
+            categoriaActiva === cat.slug
+              ? 'bg-primary border-primary text-white'
+              : 'border-primary text-primary hover:bg-primary hover:text-white'
+          }`}
+        >
+          {cat.name}
+        </a>
+      ))}
+      {categorias.length === 0 && (
+        <>
+          {['Ortodoncia', 'Rehabilitación', 'Odontología Digital', 'Endodoncia'].map(cat => (
+            <a
+              href={`/cursos?categoria=${cat.toLowerCase().replace(/ /g, '-')}`}
+              class="px-5 py-2 rounded-full text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors"
+            >
+              {cat}
+            </a>
+          ))}
+        </>
+      )}
+    </div>
+  </section>
+
+  <!-- Grid cursos -->
+  <section class="py-16 px-6 bg-[#F9F9F9]">
+    <div class="max-w-7xl mx-auto">
+      {cursosFiltrados.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cursosFiltrados.map((curso: any) => (
+            <CourseCard
+              title={curso.title?.rendered ?? curso.title}
+              slug={curso.slug}
+              image={getFeaturedImage(curso)}
+              categoria={curso.acf?.modalidad ?? ''}
+              modalidad={curso.acf?.modalidad ?? ''}
+              fecha={curso.acf?.fecha ?? ''}
+              precio={curso.acf?.precio ?? ''}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20 text-gray-400">
+          <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <p class="text-lg font-medium">No se encontraron cursos en esta categoría.</p>
+          <a href="/cursos" class="mt-4 inline-block text-primary font-semibold hover:underline">Ver todos los cursos</a>
+        </div>
+      )}
+    </div>
+  </section>
+
+</Layout>

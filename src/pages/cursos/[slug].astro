@@ -1,0 +1,181 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCursos, getCursoBySlug, getFeaturedImage } from '../../lib/wp';
+
+export async function getStaticPaths() {
+  const cursos = await getCursos();
+  return cursos.map((curso: any) => ({ params: { slug: curso.slug } }));
+}
+
+const { slug } = Astro.params;
+const curso = await getCursoBySlug(slug!);
+
+if (!curso) return Astro.redirect('/cursos');
+
+const acf = curso.acf ?? {};
+const imagen = getFeaturedImage(curso);
+const titulo = curso.title?.rendered ?? curso.title ?? '';
+const docente = Array.isArray(acf.docente_asociado) ? acf.docente_asociado[0] : acf.docente_asociado;
+---
+
+<Layout title={`${titulo} — Academia Dental`} description={curso.excerpt?.rendered?.replace(/<[^>]+>/g, '') ?? ''}>
+
+  <PageHero
+    title={titulo.replace(/<[^>]+>/g, '')}
+    breadcrumb={[{ label: 'Cursos', href: '/cursos' }, { label: titulo.replace(/<[^>]+>/g, '') }]}
+  />
+
+  <!-- Contenido -->
+  <section class="py-16 px-6 bg-[#F9F9F9]">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-10">
+
+      <!-- Columna principal -->
+      <div class="lg:col-span-2 space-y-10">
+
+        <!-- Imagen -->
+        {imagen !== '/placeholder-course.jpg' && (
+          <img src={imagen} alt={titulo} class="w-full rounded-2xl object-cover h-72 shadow-sm" />
+        )}
+
+        <!-- Objetivo -->
+        {acf.objetivo && (
+          <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
+            <h2 class="text-xl font-bold text-dark mb-4">Objetivo del curso</h2>
+            <div class="prose prose-sm max-w-none text-gray-600" set:html={acf.objetivo} />
+          </div>
+        )}
+
+        <!-- Dirigido a -->
+        {acf.dirigido_a && (
+          <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
+            <h2 class="text-xl font-bold text-dark mb-4">A quién va dirigido</h2>
+            <div class="prose prose-sm max-w-none text-gray-600" set:html={acf.dirigido_a} />
+          </div>
+        )}
+
+        <!-- Temario -->
+        {acf.temario && acf.temario.length > 0 && (
+          <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
+            <h2 class="text-xl font-bold text-dark mb-6">Temario</h2>
+            <div class="space-y-3" id="temario">
+              {acf.temario.map((modulo: any, i: number) => (
+                <details class="border border-light rounded-xl overflow-hidden group">
+                  <summary class="flex items-center justify-between px-5 py-4 cursor-pointer font-semibold text-dark hover:bg-blue-50 transition-colors list-none">
+                    <span>Módulo {i + 1}: {modulo.titulo}</span>
+                    <svg class="w-5 h-5 text-primary shrink-0 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </summary>
+                  <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">{modulo.descripcion}</div>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Docente -->
+        {docente && (
+          <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
+            <h2 class="text-xl font-bold text-dark mb-5">Docente del curso</h2>
+            <div class="flex items-center gap-5">
+              {docente.acf?.foto?.url && (
+                <img src={docente.acf.foto.url} alt={docente.post_title ?? docente.title?.rendered} class="w-16 h-16 rounded-full object-cover border-2 border-light shrink-0" />
+              )}
+              <div>
+                <p class="font-bold text-dark text-lg">{docente.post_title ?? docente.title?.rendered}</p>
+                {docente.acf?.especialidad && <p class="text-primary text-sm">{docente.acf.especialidad}</p>}
+                {docente.acf?.bio_resumida && (
+                  <div class="text-gray-500 text-sm mt-1 line-clamp-2" set:html={docente.acf.bio_resumida} />
+                )}
+                <a href={`/docentes/${docente.post_name ?? docente.slug}`} class="text-secondary text-sm font-medium hover:underline mt-1 inline-block">Ver perfil completo →</a>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Material entregado -->
+        {acf.material_entregado && acf.material_entregado.length > 0 && (
+          <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
+            <h2 class="text-xl font-bold text-dark mb-4">Material entregado</h2>
+            <ul class="space-y-2">
+              {acf.material_entregado.map((m: any) => (
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                  <svg class="w-4 h-4 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  {m.item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="space-y-6 lg:sticky lg:top-24 self-start">
+        <div class="bg-white rounded-2xl border border-light p-6 shadow-sm space-y-4">
+          {acf.precio && (
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-1">Precio</p>
+              <p class="text-2xl font-extrabold text-primary">{acf.precio}</p>
+            </div>
+          )}
+          {acf.fecha && (
+            <div class="flex items-center gap-3 text-sm text-dark border-t border-light pt-4">
+              <svg class="w-5 h-5 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <span><strong>Fecha:</strong> {acf.fecha}</span>
+            </div>
+          )}
+          {acf.ciudad && (
+            <div class="flex items-center gap-3 text-sm text-dark">
+              <svg class="w-5 h-5 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              </svg>
+              <span><strong>Ciudad:</strong> {acf.ciudad}</span>
+            </div>
+          )}
+          {acf.duracion && (
+            <div class="flex items-center gap-3 text-sm text-dark">
+              <svg class="w-5 h-5 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span><strong>Duración:</strong> {acf.duracion}</span>
+            </div>
+          )}
+          {acf.cupos && (
+            <div class="flex items-center gap-3 text-sm text-dark">
+              <svg class="w-5 h-5 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span><strong>Cupos:</strong> {acf.cupos}</span>
+            </div>
+          )}
+          <div class="pt-2 space-y-3">
+            <a
+              href={acf.cta_form_url ?? '/contacto'}
+              class="block w-full text-center bg-primary hover:bg-secondary text-white font-bold py-3.5 rounded-xl transition-colors"
+            >
+              Inscríbete Ahora
+            </a>
+            <a
+              href={acf.cta_whatsapp ? `https://wa.me/${acf.cta_whatsapp.replace(/\D/g, '')}` : 'https://wa.me/56912345678'}
+              target="_blank"
+              class="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-400 text-white font-semibold py-3 rounded-xl transition-colors"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              Consultar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</Layout>

@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Layout title="Certificación — Academia Dental" description="Conoce los requisitos, tipos de certificados y el proceso de certificación de Academia Dental Clínica Milenium.">
+
+  <PageHero
+    title="Certificación"
+    breadcrumb={[{ label: 'Certificación' }]}
+    image="/images/bg-certificacion.webp"
+  />
+
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-3xl mx-auto space-y-16">
+
+      <!-- Requisitos -->
+      <div>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-extrabold text-dark">Requisitos para obtener el certificado</h2>
+        </div>
+        <div class="bg-[#F9F9F9] rounded-2xl p-8 space-y-4">
+          {[
+            { num: '01', text: 'Asistencia mínima del 80% a las sesiones del programa (presenciales y/o sincrónicas).' },
+            { num: '02', text: 'Participación activa en las jornadas de práctica clínica contempladas en el programa.' },
+            { num: '03', text: 'Aprobación de la evaluación práctica final supervisada por el docente.' },
+            { num: '04', text: 'Entrega de los casos clínicos asignados dentro del plazo establecido.' },
+            { num: '05', text: 'Cancelación total del programa al momento de rendir la evaluación final.' },
+          ].map(req => (
+            <div class="flex gap-4 items-start">
+              <span class="text-primary font-extrabold text-lg w-8 shrink-0">{req.num}</span>
+              <p class="text-gray-600 text-sm leading-relaxed pt-0.5">{req.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Tipo de certificado -->
+      <div>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-extrabold text-dark">Tipo de certificado</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          {[
+            {
+              title: 'Certificado de Asistencia y Aprobación',
+              desc: 'Emitido por Academia Dental — Clínica Milenium. Acredita la participación y aprobación del programa, indicando horas lectivas, modalidad y área de especialización.',
+              icon: '📜',
+            },
+            {
+              title: 'Certificado de Participación',
+              desc: 'Para participantes que completan las horas de asistencia mínima sin rendir la evaluación práctica final. Válido como respaldo de formación continua.',
+              icon: '📋',
+            },
+          ].map(cert => (
+            <div class="bg-white border border-light rounded-2xl p-6 shadow-sm">
+              <div class="text-3xl mb-4">{cert.icon}</div>
+              <h3 class="font-bold text-dark text-lg mb-2">{cert.title}</h3>
+              <p class="text-gray-500 text-sm leading-relaxed">{cert.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Ejemplo visual -->
+      <div>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-extrabold text-dark">Ejemplo visual del certificado</h2>
+        </div>
+        <!-- Mockup certificado -->
+        <div class="border-4 border-primary rounded-2xl p-10 text-center bg-white shadow-lg">
+          <div class="border-2 border-light rounded-xl p-8 space-y-4">
+            <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold">Academia Dental — Clínica Milenium</p>
+            <div class="w-16 h-16 bg-primary rounded-full mx-auto flex items-center justify-center">
+              <span class="text-white font-extrabold text-xl">AD</span>
+            </div>
+            <h3 class="text-2xl font-extrabold text-dark">Certificado de Aprobación</h3>
+            <p class="text-gray-500 text-sm">Se certifica que</p>
+            <p class="text-xl font-bold text-primary border-b border-light pb-2 inline-block px-8">Nombre del Participante</p>
+            <p class="text-gray-500 text-sm leading-relaxed max-w-md mx-auto">
+              ha completado satisfactoriamente el programa de <strong class="text-dark">Ortodoncia Avanzada Clínica</strong>,
+              con una carga horaria de <strong class="text-dark">40 horas</strong> en modalidad presencial hands-on.
+            </p>
+            <div class="flex justify-center gap-12 pt-4">
+              <div class="text-center">
+                <div class="w-24 border-b border-dark mb-1"></div>
+                <p class="text-xs text-gray-400">Director Académico</p>
+              </div>
+              <div class="text-center">
+                <div class="w-24 border-b border-dark mb-1"></div>
+                <p class="text-xs text-gray-400">Docente del Programa</p>
+              </div>
+            </div>
+            <p class="text-xs text-gray-300 pt-2">Temuco, Chile — 2026</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="py-16 px-6 bg-light text-center">
+    <h3 class="text-2xl font-extrabold text-dark mb-4">¿Tienes dudas sobre el proceso de certificación?</h3>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="/contacto" class="bg-primary hover:bg-secondary text-white font-bold px-8 py-3.5 rounded-full transition-colors">Consultar</a>
+      <a href="/cursos" class="border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold px-8 py-3.5 rounded-full transition-colors">Ver Cursos</a>
+    </div>
+  </section>
+
+</Layout>
+
+<style >
+.relative.py-20.px-6.overflow-hidden {
+  background-position: center 71% !important;
+}
+</style>
