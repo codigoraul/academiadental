@@ -26,10 +26,11 @@ jobs:
         run: npm run build
       
       - name: Deploy to FTP
-        uses: sebastianpopp/ftp-action@releases/v2
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.FTP_SERVER }}
-          user: ${{ secrets.FTP_USERNAME }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          remoteDir: ${{ secrets.FTP_SERVER_DIR }}
-          localDir: dist
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          local-dir: dist/
+          dangerous-clean-slate: true
