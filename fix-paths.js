@@ -40,6 +40,8 @@ async function fixPaths(dir, baseDir = './dist') {
       content = content.replace(/src="\/logo-/g, `src="${relativePrefix}logo-`);
       
       // Reemplazar enlaces de navegación internos (href="/cursos" -> href="./cursos" o href="../cursos")
+      content = content.replace(/href="\/" /g, `href="${relativePrefix}" `); // Homepage link con espacio
+      content = content.replace(/href="\/">/g, `href="${relativePrefix}">`); // Homepage link con >
       content = content.replace(/href="\/cursos"/g, `href="${relativePrefix}cursos"`);
       content = content.replace(/href="\/docentes"/g, `href="${relativePrefix}docentes"`);
       content = content.replace(/href="\/metodologia"/g, `href="${relativePrefix}metodologia"`);
@@ -47,7 +49,7 @@ async function fixPaths(dir, baseDir = './dist') {
       content = content.replace(/href="\/contacto"/g, `href="${relativePrefix}contacto"`);
       content = content.replace(/href="\/privacidad"/g, `href="${relativePrefix}privacidad"`);
       content = content.replace(/href="\/terminos"/g, `href="${relativePrefix}terminos"`);
-      content = content.replace(/href="\/"([^"])/g, `href="${relativePrefix}$1`); // Otros enlaces que empiecen con /
+      content = content.replace(/href="\/cursos\?/g, `href="${relativePrefix}cursos?`); // Links con query params
       
       // Reemplazar rutas en url() con comillas simples
       content = content.replace(/url\('\/images\//g, `url('${relativePrefix}images/`);
