@@ -42,6 +42,12 @@ async function fixPaths(dir, baseDir = './dist') {
       // Reemplazar enlaces de navegación internos (href="/cursos" -> href="./cursos" o href="../cursos")
       content = content.replace(/href="\/" /g, `href="${relativePrefix}" `); // Homepage link con espacio
       content = content.replace(/href="\/">/g, `href="${relativePrefix}">`); // Homepage link con >
+      
+      // Links dinámicos a cursos y docentes con slugs
+      content = content.replace(/href="\/cursos\//g, `href="${relativePrefix}cursos/`);
+      content = content.replace(/href="\/docentes\//g, `href="${relativePrefix}docentes/`);
+      
+      // Links a páginas principales
       content = content.replace(/href="\/cursos"/g, `href="${relativePrefix}cursos"`);
       content = content.replace(/href="\/docentes"/g, `href="${relativePrefix}docentes"`);
       content = content.replace(/href="\/metodologia"/g, `href="${relativePrefix}metodologia"`);

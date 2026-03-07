@@ -26,46 +26,6 @@ const cursosFiltrados = categoriaActiva === 'todos'
     imagePosition="center 90%"
   />
 
-  <!-- Filtros -->
-  <section class="py-10 px-6 bg-white border-b border-light">
-    <div class="max-w-7xl mx-auto flex flex-wrap gap-3 justify-center">
-      <a
-        href="/cursos"
-        class={`px-5 py-2 rounded-full text-sm font-semibold border-2 transition-colors ${
-          categoriaActiva === 'todos'
-            ? 'bg-primary border-primary text-white'
-            : 'border-primary text-primary hover:bg-primary hover:text-white'
-        }`}
-      >
-        Todos
-      </a>
-      {categorias.map((cat: any) => (
-        <a
-          href={`/cursos?categoria=${cat.slug}`}
-          class={`px-5 py-2 rounded-full text-sm font-semibold border-2 transition-colors ${
-            categoriaActiva === cat.slug
-              ? 'bg-primary border-primary text-white'
-              : 'border-primary text-primary hover:bg-primary hover:text-white'
-          }`}
-        >
-          {cat.name}
-        </a>
-      ))}
-      {categorias.length === 0 && (
-        <>
-          {['Ortodoncia', 'Rehabilitación', 'Odontología Digital', 'Endodoncia'].map(cat => (
-            <a
-              href={`/cursos?categoria=${cat.toLowerCase().replace(/ /g, '-')}`}
-              class="px-5 py-2 rounded-full text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors"
-            >
-              {cat}
-            </a>
-          ))}
-        </>
-      )}
-    </div>
-  </section>
-
   <!-- Grid cursos -->
   <section class="py-16 px-6 bg-[#F9F9F9]">
     <div class="max-w-7xl mx-auto">
