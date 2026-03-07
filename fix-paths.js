@@ -76,7 +76,8 @@ async function fixPaths(dir, baseDir = './dist') {
       content = content.replace(/url\(\/_astro\//g, `url(${relativePrefix}_astro/`);
       
       await writeFile(fullPath, content, 'utf-8');
-      console.log(`Fixed (depth ${depth}): ${fullPath}`);
+      const fileName = fullPath.split('/').pop();
+      console.log(`✓ Fixed (depth ${depth}, prefix: ${relativePrefix}): ${fileName}`);
     }
   }
 }
