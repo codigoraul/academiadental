@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
-import { getCursos, getCursoBySlug, getFeaturedImage } from '../../lib/wp';
+import { getCursos, getCursoBySlug, getDocenteById, getFeaturedImage } from '../../lib/wp';
 
 export async function getStaticPaths() {
   const cursos = await getCursos();
@@ -16,7 +16,18 @@ if (!curso) return Astro.redirect('/cursos');
 const acf = curso.acf ?? {};
 const imagen = getFeaturedImage(curso);
 const titulo = curso.title?.rendered ?? curso.title ?? '';
-const docente = Array.isArray(acf.docente_asociado) ? acf.docente_asociado[0] : acf.docente_asociado;
+
+// Obtener datos completos del docente
+const docenteRaw = Array.isArray(acf.docente_asociado) ? acf.docente_asociado[0] : acf.docente_asociado;
+let docente = docenteRaw;
+
+if (docenteRaw) {
+  // Si el docente es solo un ID, obtener los datos completos
+  if (typeof docenteRaw === 'number' || docenteRaw.ID) {
+    const docenteId = typeof docenteRaw === 'number' ? docenteRaw : docenteRaw.ID;
+    docente = await getDocenteById(docenteId);
+  }
+}
 ---
 
 <Layout title={`${titulo} — Academia Dental`} description={curso.excerpt?.rendered?.replace(/<[^>]+>/g, '') ?? ''}>
@@ -78,19 +89,19 @@ const docente = Array.isArray(acf.docente_asociado) ? acf.docente_asociado[0] : 
         {docente && (
           <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
             <h2 class="text-xl font-bold text-dark mb-5">Docente del curso</h2>
-            <div class="flex items-center gap-5">
+            <a href={`/docentes/${docente.slug ?? docente.post_name}`} class="flex items-center gap-5 hover:opacity-80 transition-opacity">
               {docente.acf?.foto?.url && (
-                <img src={docente.acf.foto.url} alt={docente.post_title ?? docente.title?.rendered} class="w-16 h-16 rounded-full object-cover border-2 border-light shrink-0" />
+                <img src={docente.acf.foto.url} alt={docente.title?.rendered ?? docente.post_title} class="w-16 h-16 rounded-full object-cover border-2 border-light shrink-0" />
               )}
               <div>
-                <p class="font-bold text-dark text-lg">{docente.post_title ?? docente.title?.rendered}</p>
+                <p class="font-bold text-dark text-lg">{docente.title?.rendered ?? docente.post_title}</p>
                 {docente.acf?.especialidad && <p class="text-primary text-sm">{docente.acf.especialidad}</p>}
                 {docente.acf?.bio_resumida && (
                   <div class="text-gray-500 text-sm mt-1 line-clamp-2" set:html={docente.acf.bio_resumida} />
                 )}
-                <a href={`/docentes/${docente.post_name ?? docente.slug}`} class="text-secondary text-sm font-medium hover:underline mt-1 inline-block">Ver perfil completo →</a>
+                <span class="text-secondary text-sm font-medium hover:underline mt-1 inline-block">Ver perfil completo →</span>
               </div>
-            </div>
+            </a>
           </div>
         )}
 

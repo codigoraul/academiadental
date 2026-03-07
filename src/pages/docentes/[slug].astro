@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import PageHero from '../../components/PageHero.astro';
-import { getDocentes, getDocenteBySlug, getFeaturedImage } from '../../lib/wp';
+import { getDocentes, getDocenteBySlug, getCursoById, getFeaturedImage } from '../../lib/wp';
 
 export async function getStaticPaths() {
   const docentes = await getDocentes();
@@ -16,7 +16,20 @@ if (!docente) return Astro.redirect('/docentes');
 const acf = docente.acf ?? {};
 const nombre = docente.title?.rendered ?? docente.title ?? '';
 const foto = acf.foto?.url ?? getFeaturedImage(docente);
-const cursosRelacionados = Array.isArray(acf.cursos_relacionados) ? acf.cursos_relacionados : [];
+
+// Obtener datos completos de los cursos relacionados
+const cursosRelacionadosRaw = Array.isArray(acf.cursos_relacionados) ? acf.cursos_relacionados : [];
+const cursosRelacionados = await Promise.all(
+  cursosRelacionadosRaw.map(async (curso: any) => {
+    // Si el curso es solo un ID, obtener los datos completos
+    if (typeof curso === 'number' || curso.ID) {
+      const cursoId = typeof curso === 'number' ? curso : curso.ID;
+      return await getCursoById(cursoId);
+    }
+    // Si ya tiene los datos, devolverlo tal cual
+    return curso;
+  })
+).then(cursos => cursos.filter(Boolean)); // Filtrar nulls
 ---
 
 <Layout title={`${nombre} — Academia Dental`} description={`Perfil de ${nombre}, docente de Academia Dental Clínica Milenium.`}>
@@ -72,6 +85,14 @@ const cursosRelacionados = Array.isArray(acf.cursos_relacionados) ? acf.cursos_r
 
       <aside class="space-y-6 lg:sticky lg:top-24 self-start">
         <div class="bg-white rounded-2xl border border-light p-6 shadow-sm text-center">
+          {foto && (
+            <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-light mb-4">
+              <img src={foto} alt={nombre.replace(/<[^>]+>/g, '')} class="w-full h-full object-cover" />
+            </div>
+          )}
+          <h3 class="font-bold text-dark text-lg mb-2">{nombre.replace(/<[^>]+>/g, '')}</h3>
+          {acf.cargo && <p class="text-primary text-sm font-medium mb-1">{acf.cargo}</p>}
+          {acf.especialidad && <p class="text-gray-500 text-sm mb-4">{acf.especialidad}</p>}
           <p class="text-sm text-gray-500 mb-4">¿Te interesa un curso con {nombre.replace(/<[^>]+>/g, '')}?</p>
           <a href="/contacto" class="block w-full bg-primary hover:bg-secondary text-white font-bold py-3 rounded-xl transition-colors text-sm mb-3">
             Consultar disponibilidad

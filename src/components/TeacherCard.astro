@@ -9,6 +9,19 @@ interface Props {
 }
 
 const { name, slug, image, cargo, especialidad, bio } = Astro.props;
+
+// Función para crear excerpt de la biografía
+const createExcerpt = (text: string, maxLength: number = 400) => {
+  if (!text) return '';
+  const cleanText = text.replace(/<[^>]+>/g, '');
+  if (cleanText.length <= maxLength) return text;
+  const truncated = cleanText.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  return truncated.substring(0, lastSpace) + '...';
+};
+
+const bioExcerpt = bio ? createExcerpt(bio) : '';
+const needsReadMore = bio && bio.replace(/<[^>]+>/g, '').length > 400;
 ---
 
 <article class="bg-white rounded-2xl shadow-sm border border-light overflow-hidden hover:shadow-md transition-shadow group text-center p-6">
@@ -23,8 +36,15 @@ const { name, slug, image, cargo, especialidad, bio } = Astro.props;
   <h3 class="font-bold text-dark text-lg mb-1 group-hover:text-primary transition-colors">{name}</h3>
   {cargo && <p class="text-primary text-sm font-medium mb-1">{cargo}</p>}
   {especialidad && <p class="text-gray-500 text-xs mb-3">{especialidad}</p>}
-  {bio && (
-    <p class="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3" set:html={bio} />
+  {bioExcerpt && (
+    <div class="text-gray-600 text-sm leading-relaxed mb-4">
+      <p set:html={bioExcerpt} />
+      {needsReadMore && (
+        <a href={`/docentes/${slug}`} class="text-secondary hover:underline font-medium inline-block mt-1">
+          Leer más →
+        </a>
+      )}
+    </div>
   )}
   <a
     href={`/docentes/${slug}`}
