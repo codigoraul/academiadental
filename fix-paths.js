@@ -75,6 +75,11 @@ async function fixPaths(dir, baseDir = './dist') {
       content = content.replace(/url\(\/logo-/g, `url(${relativePrefix}logo-`);
       content = content.replace(/url\(\/_astro\//g, `url(${relativePrefix}_astro/`);
       
+      // Reemplazar rutas en atributos style inline (background-image, etc)
+      content = content.replace(/style="([^"]*?)url\('\/images\//g, `style="$1url('${relativePrefix}images/`);
+      content = content.replace(/style="([^"]*?)url\("\/images\//g, `style="$1url("${relativePrefix}images/`);
+      content = content.replace(/style="([^"]*?)url\(\/images\//g, `style="$1url(${relativePrefix}images/`);
+      
       await writeFile(fullPath, content, 'utf-8');
       const fileName = fullPath.split('/').pop();
       console.log(`✓ Fixed (depth ${depth}, prefix: ${relativePrefix}): ${fileName}`);
