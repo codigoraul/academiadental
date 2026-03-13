@@ -84,17 +84,22 @@ const cursosRelacionados = await Promise.all(
       </div>
 
       <aside class="space-y-6 lg:sticky lg:top-24 self-start">
-        <div class="bg-white rounded-2xl border border-light p-6 shadow-sm text-center">
+        <div class="rounded-2xl border border-light/20 p-6 shadow-lg text-center bg-[#002B5E] text-white">
           {foto && (
-            <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-light mb-4">
-              <img src={foto} alt={nombre.replace(/<[^>]+>/g, '')} class="w-full h-full object-cover" />
+            <div class="relative mb-5">
+              <div class="mx-auto w-[210px] h-[260px] rounded-[28px] overflow-hidden shadow-[0_20px_45px_rgba(12,30,60,0.22)] ring-4 ring-white bg-gradient-to-b from-slate-50 to-slate-100">
+                <img src={foto} alt={nombre.replace(/<[^>]+>/g, '')} class="w-full h-full object-cover" />
+              </div>
+              <div class="pointer-events-none absolute inset-0 flex justify-center">
+                <span class="block h-[70px] w-[140px] rounded-b-full bg-white/60 blur-2xl -translate-y-[24px]"></span>
+              </div>
             </div>
           )}
-          <h3 class="font-bold text-dark text-lg mb-2">{nombre.replace(/<[^>]+>/g, '')}</h3>
-          {acf.cargo && <p class="text-primary text-sm font-medium mb-1">{acf.cargo}</p>}
-          {acf.especialidad && <p class="text-gray-500 text-sm mb-4">{acf.especialidad}</p>}
-          <p class="text-sm text-gray-500 mb-4">¿Te interesa un curso con {nombre.replace(/<[^>]+>/g, '')}?</p>
-          <a href="/contacto" class="block w-full bg-primary hover:bg-secondary text-white font-bold py-3 rounded-xl transition-colors text-sm mb-3">
+          <h3 class="font-bold text-white text-lg mb-2">{nombre.replace(/<[^>]+>/g, '')}</h3>
+          {acf.cargo && <p class="text-blue-200 text-sm font-medium mb-1">{acf.cargo}</p>}
+          {acf.especialidad && <p class="text-blue-100 text-sm mb-4">{acf.especialidad}</p>}
+          <p class="text-sm text-blue-100/90 mb-4">¿Te interesa un curso con {nombre.replace(/<[^>]+>/g, '')}?</p>
+          <a href="/contacto" class="block w-full bg-white/15 hover:bg-white/25 text-white font-bold py-3 rounded-xl transition-colors text-sm mb-3">
             Consultar disponibilidad
           </a>
           <a href="https://wa.me/56912345678" target="_blank" class="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-400 text-white font-semibold py-3 rounded-xl transition-colors text-sm">

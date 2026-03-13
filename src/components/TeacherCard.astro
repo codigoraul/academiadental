@@ -1,55 +1,160 @@
 ---
 interface Props {
   name: string;
-  slug: string;
-  image: string;
   cargo?: string;
   especialidad?: string;
   bio?: string;
+  image?: string;
+  slug?: string;
 }
 
-const { name, slug, image, cargo, especialidad, bio } = Astro.props;
+const { name, cargo, especialidad, bio, image, slug } = Astro.props;
 
-// Función para crear excerpt de la biografía
-const createExcerpt = (text: string, maxLength: number = 400) => {
-  if (!text) return '';
-  const cleanText = text.replace(/<[^>]+>/g, '');
-  if (cleanText.length <= maxLength) return text;
-  const truncated = cleanText.substring(0, maxLength);
-  const lastSpace = truncated.lastIndexOf(' ');
-  return truncated.substring(0, lastSpace) + '...';
-};
-
-const bioExcerpt = bio ? createExcerpt(bio) : '';
-const needsReadMore = bio && bio.replace(/<[^>]+>/g, '').length > 400;
+const cleanBio = bio ? bio.replace(/<[^>]*>/g, '').trim() : '';
+const shortBio = cleanBio.length > 120 ? cleanBio.slice(0, 120) + '…' : cleanBio;
+const initials = (name ?? '').split(' ').filter((w) => w.length > 2).slice(0, 2).map((w) => w[0]).join('');
 ---
 
-<article class="bg-white rounded-2xl shadow-sm border border-light overflow-hidden hover:shadow-md transition-shadow group text-center p-6">
-  <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-light mb-4">
-    <img
-      src={image}
-      alt={name}
-      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-      loading="lazy"
-    />
+<article class="teacher-card group">
+
+  <div class="photo-wrap">
+    {image ? (
+      <img src={image} alt={name} class="photo-img" loading="lazy" />
+    ) : (
+      <div class="photo-placeholder">{initials}</div>
+    )}
+    <div class="photo-overlay"></div>
   </div>
-  <h3 class="font-bold text-dark text-lg mb-1 group-hover:text-primary transition-colors">{name}</h3>
-  {cargo && <p class="text-primary text-sm font-medium mb-1">{cargo}</p>}
-  {especialidad && <p class="text-gray-500 text-xs mb-3">{especialidad}</p>}
-  {bioExcerpt && (
-    <div class="text-gray-600 text-sm leading-relaxed mb-4">
-      <p set:html={bioExcerpt} />
-      {needsReadMore && (
-        <a href={`/docentes/${slug}`} class="text-secondary hover:underline font-medium inline-block mt-1">
-          Leer más →
-        </a>
-      )}
-    </div>
-  )}
-  <a
-    href={`/docentes/${slug}`}
-    class="inline-block bg-primary hover:bg-secondary text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
-  >
-    Ver perfil
-  </a>
+
+  <div class="card-body">
+    {slug ? (
+      <a href={`/docentes/${slug}`} class="card-name-link">
+        <h2 class="card-name text-3xl">{name}</h2>
+      </a>
+    ) : (
+      <h2 class="card-name text-3xl">{name}</h2>
+    )}
+    {cargo && <p class="card-role text-lg">{cargo}</p>}
+    {especialidad && especialidad.length < 40 && (
+      <span class="card-spec">{especialidad}</span>
+    )}
+    {shortBio && <p class="card-bio">{shortBio}</p>}
+    {slug && (
+      <a href={`/docentes/${slug}`} class="card-btn">Ver perfil →</a>
+    )}
+  </div>
+
 </article>
+
+<style>
+  .teacher-card {
+    position: relative;
+    background: #002B5E;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .teacher-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 24px 48px rgba(0, 43, 94, 0.45);
+  }
+
+  /* FOTO — contain para ver completa */
+  .photo-wrap {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .teacher-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(4, 44, 83, 0.2);
+  }
+
+  .photo-overlay {
+    display: none;
+  }
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    font-weight: 700;
+    color: #B5D4F4;
+    opacity: 0.3;
+  }
+  .photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, #002B5E);
+    pointer-events: none;
+  }
+
+  /* CONTENIDO */
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 22px 24px;
+  }
+  .card-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #E6F1FB;
+    margin: 0;
+    line-height: 1.25;
+  }
+  .card-role {
+    font-size: 13px;
+    color: #85B7EB;
+    margin: 0;
+    line-height: 1.4;
+  }
+  .card-spec {
+    display: inline-block;
+    width: fit-content;
+    font-size: 12px;
+    background: rgba(55, 138, 221, 0.2);
+    color: #e2edf9;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 0.5px solid rgba(55, 138, 221, 0.4);
+    margin-top: 2px;
+  }
+  .card-bio {
+    font-size: 14px;
+    color: rgba(248, 250, 252, 0.55);
+    line-height: 1.6;
+    margin: 4px 0 0;
+  }
+  .card-btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 0.5px solid rgba(181, 212, 244, 0.15);
+    font-size: 14px;
+    font-weight: 600;
+    color: #85B7EB;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .card-btn:hover {
+    color: #E6F1FB;
+  }
+</style>
