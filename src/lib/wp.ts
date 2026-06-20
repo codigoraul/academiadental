@@ -77,3 +77,15 @@ export async function getCategoriasCurso() {
 export function getFeaturedImage(post: any): string {
   return post?._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? '/placeholder-course.jpg';
 }
+
+export function toParagraphs(text: string): string {
+  if (!text) return '';
+  // Si ya contiene bloques HTML (p. ej. campos WYSIWYG), devolver tal cual
+  if (/<p[\s>]/i.test(text)) return text;
+  return text
+    .split(/\r\n\r\n|\n\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((p) => `<p>${p.replace(/\r\n|\n/g, '<br>')}</p>`)
+    .join('');
+}

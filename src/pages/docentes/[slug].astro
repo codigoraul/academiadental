@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import PageHero from '../../components/PageHero.astro';
-import { getDocentes, getDocenteBySlug, getCursoById, getFeaturedImage } from '../../lib/wp';
+import { getDocentes, getDocenteBySlug, getCursoById, getFeaturedImage, toParagraphs } from '../../lib/wp';
 
 export async function getStaticPaths() {
   const docentes = await getDocentes();
@@ -46,7 +46,7 @@ const cursosRelacionados = await Promise.all(
         {acf.bio_resumida && (
           <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
             <h2 class="text-xl font-bold text-dark mb-4">Biografía</h2>
-            <div class="prose prose-sm max-w-none text-gray-600" set:html={acf.bio_resumida} />
+            <div class="prose prose-sm max-w-none text-gray-600" set:html={toParagraphs(acf.bio_resumida)} />
           </div>
         )}
 

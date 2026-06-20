@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
-import { getCursos, getCursoBySlug, getDocenteById, getFeaturedImage } from '../../lib/wp';
+import { getCursos, getCursoBySlug, getDocenteById, getFeaturedImage, toParagraphs } from '../../lib/wp';
 
 export async function getStaticPaths() {
   const cursos = await getCursos();
@@ -53,7 +53,7 @@ if (docenteRaw) {
         {acf.objetivo && (
           <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
             <h2 class="text-xl font-bold text-dark mb-4">Objetivo del curso</h2>
-            <div class="prose prose-sm max-w-none text-gray-600" set:html={acf.objetivo} />
+            <div class="prose prose-sm max-w-none text-gray-600" set:html={toParagraphs(acf.objetivo)} />
           </div>
         )}
 
@@ -61,7 +61,7 @@ if (docenteRaw) {
         {acf.dirigido_a && (
           <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
             <h2 class="text-xl font-bold text-dark mb-4">A quién va dirigido</h2>
-            <div class="prose prose-sm max-w-none text-gray-600" set:html={acf.dirigido_a} />
+            <div class="prose prose-sm max-w-none text-gray-600" set:html={toParagraphs(acf.dirigido_a)} />
           </div>
         )}
 
