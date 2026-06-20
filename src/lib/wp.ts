@@ -2,7 +2,7 @@ const WP_API = 'https://academiadental.cl/admin/wp-json/wp/v2';
 
 export async function getCursos(params: Record<string, string> = {}) {
   try {
-    const query = new URLSearchParams({ per_page: '100', _embed: '1', ...params });
+    const query = new URLSearchParams({ per_page: '100', _embed: '1', orderby: 'menu_order', order: 'asc', ...params });
     const res = await fetch(`${WP_API}/curso?${query}`);
     if (!res.ok) return [];
     return res.json();
@@ -34,7 +34,7 @@ export async function getCursoById(id: number) {
 
 export async function getDocentes(params: Record<string, string> = {}) {
   try {
-    const query = new URLSearchParams({ per_page: '100', _embed: '1', ...params });
+    const query = new URLSearchParams({ per_page: '100', _embed: '1', orderby: 'menu_order', order: 'asc', ...params });
     const res = await fetch(`${WP_API}/docente?${query}`);
     if (!res.ok) return [];
     return res.json();
