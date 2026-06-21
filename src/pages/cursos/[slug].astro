@@ -28,6 +28,44 @@ if (docenteRaw) {
     docente = await getDocenteById(docenteId);
   }
 }
+
+// Fecha del curso: ACF la entrega como 'Ymd' (p. ej. 20260722)
+function parseFechaCurso(raw: any): Date | null {
+  if (!raw) return null;
+  const s = String(raw).trim();
+  let y: number, m: number, d: number;
+  if (/^\d{8}$/.test(s)) {
+    y = +s.slice(0, 4); m = +s.slice(4, 6); d = +s.slice(6, 8);
+  } else if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+    [y, m, d] = s.slice(0, 10).split('-').map(Number);
+  } else {
+    return null;
+  }
+  const date = new Date(y, m - 1, d);
+  return isNaN(date.getTime()) ? null : date;
+}
+
+const fechaCurso = parseFechaCurso(acf.fecha);
+const fechaLegible = fechaCurso
+  ? fechaCurso.toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })
+  : acf.fecha;
+
+const pad = (n: number) => String(n).padStart(2, '0');
+const gcalDate = (date: Date) => `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
+
+let googleCalendarUrl = '';
+if (fechaCurso) {
+  const fin = new Date(fechaCurso);
+  fin.setDate(fin.getDate() + 1);
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: titulo.replace(/<[^>]+>/g, ''),
+    dates: `${gcalDate(fechaCurso)}/${gcalDate(fin)}`,
+    details: `Curso de Academia Dental${acf.duracion ? ' · ' + acf.duracion : ''}`,
+    location: acf.ciudad ?? '',
+  });
+  googleCalendarUrl = `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
 ---
 
 <Layout title={`${titulo} — Academia Dental`} description={curso.excerpt?.rendered?.replace(/<[^>]+>/g, '') ?? ''}>
@@ -134,11 +172,26 @@ if (docenteRaw) {
             </div>
           )}
           {acf.fecha && (
-            <div class="flex items-center gap-3 text-sm text-dark border-t border-light pt-4">
-              <svg class="w-5 h-5 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-              </svg>
-              <span><strong>Fecha:</strong> {acf.fecha}</span>
+            <div class="border-t border-light pt-4">
+              <div class="flex items-center gap-3 text-sm text-dark">
+                <svg class="w-5 h-5 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <span><strong>Fecha:</strong> {fechaLegible}</span>
+              </div>
+              {googleCalendarUrl && (
+                <a
+                  href={googleCalendarUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="mt-2 ml-8 inline-flex items-center gap-1.5 text-xs font-semibold text-secondary hover:text-primary transition-colors"
+                >
+                  <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m4-4H8M4 7a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/>
+                  </svg>
+                  Añadir a Google Calendar
+                </a>
+              )}
             </div>
           )}
           {acf.ciudad && (

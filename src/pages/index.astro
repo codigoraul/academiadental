@@ -32,12 +32,12 @@ const cursos = await getCursos({ per_page: '3' });
         </div>
       </div>
       <!-- Cards flotantes decorativas -->
-      <div class="hidden lg:grid grid-cols-2 gap-4">
+      <div class="hidden lg:grid grid-cols-2 gap-5">
         {['Ortodoncia Avanzada', 'Rehabilitación Estética', 'Odontología Digital', 'Endodoncia'].map((nombre, i) => (
-          <div class={`bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-5 ${i % 2 !== 0 ? 'mt-6' : ''}`}>
-            <div class="w-8 h-8 bg-white/20 rounded-lg mb-3"></div>
-            <p class="font-semibold text-sm">{nombre}</p>
-            <p class="text-xs text-blue-200 mt-1">Próximo curso disponible</p>
+          <div class={`bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 transition-all duration-300 hover:bg-white/15 hover:-translate-y-1 ${i % 2 !== 0 ? 'mt-6' : ''}`}>
+            <div class="w-10 h-1.5 bg-white/50 rounded-full mb-4"></div>
+            <p class="font-bold text-lg leading-snug">{nombre}</p>
+            <p class="text-sm text-blue-200 mt-2">Próximo curso disponible</p>
           </div>
         ))}
       </div>
