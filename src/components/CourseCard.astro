@@ -10,6 +10,23 @@ interface Props {
 }
 
 const { title, slug, image, categoria, modalidad, fecha, precio } = Astro.props;
+
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function formatFecha(raw) {
+  if (!raw) return '';
+  const s = String(raw).trim();
+  if (/^\d{8}$/.test(s)) {
+    const y = +s.slice(0,4), m = +s.slice(4,6), d = +s.slice(6,8);
+    return `${d} de ${MESES[m-1]} de ${y}`;
+  }
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+    const [y,m,d] = s.slice(0,10).split('-').map(Number);
+    return `${d} de ${MESES[m-1]} de ${y}`;
+  }
+  if (/^\d{4}$/.test(s)) return `Año ${s} · Fecha por confirmar`;
+  return s;
+}
+const fechaLabel = formatFecha(fecha);
 ---
 
 <article class="bg-white rounded-2xl shadow-sm border border-light overflow-hidden hover:shadow-md transition-shadow group">
@@ -41,12 +58,12 @@ const { title, slug, image, categoria, modalidad, fecha, precio } = Astro.props;
           {modalidad}
         </span>
       )}
-      {fecha && (
+      {fechaLabel && (
         <span class="flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
           </svg>
-          {fecha}
+          {fechaLabel}
         </span>
       )}
       {precio && (

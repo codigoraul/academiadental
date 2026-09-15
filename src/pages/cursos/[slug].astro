@@ -48,7 +48,7 @@ function parseFechaCurso(raw: any): Date | null {
 const fechaCurso = parseFechaCurso(acf.fecha);
 const fechaLegible = fechaCurso
   ? fechaCurso.toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })
-  : acf.fecha;
+  : (/^\d{4}$/.test(String(acf.fecha ?? '').trim()) ? `Año ${String(acf.fecha).trim()} · Fecha por confirmar` : acf.fecha);
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const gcalDate = (date: Date) => `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
@@ -84,8 +84,9 @@ if (fechaCurso) {
 
         <!-- Imagen -->
         {imagen !== '/placeholder-course.jpg' && (
-          <button type="button" class="js-lightbox block w-full rounded-2xl overflow-hidden shadow-sm bg-primary/5 cursor-zoom-in" data-src={imagen} aria-label="Ampliar imagen del curso">
-            <img src={imagen} alt={titulo} class="w-full max-h-[36rem] object-contain mx-auto" />
+          <button type="button" class="js-lightbox group relative block w-full rounded-2xl overflow-hidden shadow-sm bg-primary/5 cursor-zoom-in" data-src={imagen} aria-label="Ver afiche completo">
+            <img src={imagen} alt={titulo} class="w-full aspect-[1024/900] object-cover object-top block" />
+            <span class="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 text-white text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm">Ver afiche completo <span aria-hidden="true">⤢</span></span>
           </button>
         )}
 
