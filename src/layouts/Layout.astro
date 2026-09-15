@@ -7,11 +7,15 @@ import WhatsAppButton from '../components/WhatsAppButton.astro';
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
+  image?: string;
 }
 
 const {
-  title = 'Academia Dental — Clínica Milenium',
-  description = 'Cursos de odontología presenciales y híbridos dictados por especialistas. Formación continua de alto nivel para odontólogos.',
+  title = 'Academia Dental — Cursos de Odontología en Temuco',
+  description = 'Cursos de odontología presenciales y híbridos dictados por especialistas en Temuco, Araucanía. Formación continua de alto nivel para odontólogos de la Novena Región y todo Chile.',
+  keywords = 'cursos de odontología Temuco, cursos dentales Araucanía, formación odontológica Novena Región, educación continua odontología Chile, Academia Dental Temuco',
+  image,
 } = Astro.props;
 ---
 
@@ -21,6 +25,17 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="geo.region" content="CL-AR" />
+    <meta name="geo.placename" content="Temuco, Araucanía, Chile" />
+    <meta name="author" content="Academia Dental" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Academia Dental" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {image && <meta property="og:image" content={image} />}
+    <meta name="twitter:card" content="summary_large_image" />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

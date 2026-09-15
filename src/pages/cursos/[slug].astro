@@ -66,9 +66,42 @@ if (fechaCurso) {
   });
   googleCalendarUrl = `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
+
+// --- SEO local (Temuco / Araucanía / Chile) ---
+const tituloPlano = String(titulo).replace(/<[^>]+>/g, '').trim();
+const objetivoPlano = String(acf.objetivo ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const ciudadSeo = String(acf.ciudad ?? 'Temuco').trim();
+const seoTitle = `Curso ${tituloPlano} en Temuco | Academia Dental`;
+const seoDesc = (`Curso ${tituloPlano} en ${ciudadSeo}, Araucanía (Novena Región), Chile. ` +
+  (objetivoPlano ? objetivoPlano.slice(0, 130) + (objetivoPlano.length > 130 ? '…' : '') + ' ' : '') +
+  'Formación odontológica dictada por especialistas en Academia Dental.').replace(/\s+/g, ' ').trim();
+const seoKeywords = [
+  tituloPlano,
+  `curso ${tituloPlano} Temuco`,
+  `${tituloPlano} Araucanía`,
+  'cursos de odontología Temuco',
+  'cursos dentales Araucanía',
+  'formación odontológica Novena Región',
+  'educación continua odontología Chile',
+  'Academia Dental Temuco',
+].join(', ');
+const cursoSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: tituloPlano,
+  description: seoDesc,
+  provider: {
+    '@type': 'Organization',
+    name: 'Academia Dental',
+    areaServed: ['Temuco', 'Araucanía', 'Chile'],
+  },
+  locationCreated: 'Temuco, Araucanía, Chile',
+  inLanguage: 'es-CL',
+};
 ---
 
-<Layout title={`${titulo} — Academia Dental`} description={curso.excerpt?.rendered?.replace(/<[^>]+>/g, '') ?? ''}>
+<Layout title={seoTitle} description={seoDesc} keywords={seoKeywords} image={imagen !== '/placeholder-course.jpg' ? imagen : undefined}>
+  <script type="application/ld+json" set:html={JSON.stringify(cursoSchema)} />
 
   <PageHero
     title={titulo.replace(/<[^>]+>/g, '')}
