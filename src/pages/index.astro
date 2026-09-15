@@ -11,7 +11,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
 
   <!-- HERO -->
   <section id="hero" class="relative text-white py-24 px-6 overflow-hidden" style="background-image: url('/images/hero-bg-temuco.webp'); background-size: cover; background-position: center;">
-    <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(20, 52, 117, 0.6) 0%, rgba(10, 35, 84, 0.5) 50%, rgba(20, 42, 69, 0.55) 100%);"></div>
+    <div class="absolute inset-0" style="background: linear-gradient(120deg, rgba(8, 26, 64, 0.86) 0%, rgba(10, 35, 84, 0.72) 45%, rgba(10, 30, 74, 0.82) 100%);"></div>
     <div class="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
       <div>
         <span class="inline-block bg-white/20 text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6">
@@ -34,14 +34,17 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
       </div>
       <!-- Curso destacado 2026 -->
       <div class="hidden lg:block">
-        <a href="/cursos/rehabilitacion-digital" class="block bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transition-all duration-300 hover:bg-white/15 hover:-translate-y-1">
-          <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">Curso 2026</span>
-          <p class="font-extrabold text-2xl leading-snug mb-3">Rehabilitación Digital</p>
-          <p class="text-blue-100 mb-4">De la planificación a la restauración definitiva.</p>
-          <div class="text-sm text-blue-200 space-y-1">
+        <a href="/cursos/rehabilitacion-digital" class="group block bg-[#0b1f45]/95 backdrop-blur-md border border-secondary/50 rounded-2xl p-8 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-secondary hover:shadow-secondary/20">
+          <span class="inline-flex items-center gap-2 bg-secondary text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-5">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Curso 2026 · Inscripciones abiertas
+          </span>
+          <p class="font-extrabold text-3xl leading-tight mb-3 text-white">Rehabilitación Digital</p>
+          <p class="text-blue-100 mb-5">De la planificación a la restauración definitiva.</p>
+          <div class="text-sm text-blue-100 space-y-1.5 border-t border-white/10 pt-4">
             <p>📅 Sáb 14 y Dom 15 de noviembre 2026</p>
             <p>📍 Academia Dental, Temuco</p>
           </div>
+          <span class="inline-flex items-center gap-2 mt-5 text-secondary font-bold group-hover:gap-3 transition-all">Ver curso <span aria-hidden="true">→</span></span>
         </a>
       </div>
     </div>
