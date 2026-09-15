@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import CourseCard from '../components/CourseCard.astro';
 import { getCursos, getFeaturedImage } from '../lib/wp';
 
-const cursos = await getCursos({ per_page: '3' });
+const cursos = await getCursos({ per_page: '1' });
 ---
 
 <Layout title="Academia Dental — Formación Clínica de Alto Nivel" description="Cursos de odontología presenciales y híbridos dictados por especialistas. Formación continua de alto nivel para odontólogos.">
@@ -84,15 +84,15 @@ const cursos = await getCursos({ per_page: '3' });
     <div class="max-w-7xl mx-auto">
       <div class="flex items-end justify-between mb-10">
         <div>
-          <h2 class="text-3xl font-extrabold text-dark mb-2">Cursos Destacados</h2>
-          <p class="text-gray-500">Selección de nuestros programas más solicitados.</p>
+          <h2 class="text-3xl font-extrabold text-dark mb-2">Cursos 2026</h2>
+          <p class="text-gray-500">Nuestro próximo curso disponible.</p>
         </div>
         <a href="/cursos" class="hidden md:inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-secondary transition-colors">
           Ver todos <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>
       {cursos.length > 0 ? (
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid gap-6 max-w-md mx-auto">
           {cursos.map((curso: any) => (
             <CourseCard
               title={curso.title?.rendered ?? curso.title}
