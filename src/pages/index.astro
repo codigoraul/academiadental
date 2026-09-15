@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CourseCard from '../components/CourseCard.astro';
-import { getCursos, getFeaturedImage } from '../lib/wp';
+import { getCursoBySlug, getFeaturedImage } from '../lib/wp';
 
-const cursos = await getCursos({ per_page: '1' });
+const cursoDestacado = await getCursoBySlug('rehabilitacion-digital');
+const cursos = cursoDestacado ? [cursoDestacado] : [];
 ---
 
 <Layout title="Academia Dental — Formación Clínica de Alto Nivel" description="Cursos de odontología presenciales y híbridos dictados por especialistas. Formación continua de alto nivel para odontólogos.">
