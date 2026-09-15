@@ -31,15 +31,17 @@ const cursos = await getCursos({ per_page: '1' });
           </a>
         </div>
       </div>
-      <!-- Cards flotantes decorativas -->
-      <div class="hidden lg:grid grid-cols-2 gap-5">
-        {['Ortodoncia Avanzada', 'Rehabilitación Estética', 'Odontología Digital', 'Endodoncia'].map((nombre, i) => (
-          <div class={`bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 transition-all duration-300 hover:bg-white/15 hover:-translate-y-1 ${i % 2 !== 0 ? 'mt-6' : ''}`}>
-            <div class="w-10 h-1.5 bg-white/50 rounded-full mb-4"></div>
-            <p class="font-bold text-lg leading-snug">{nombre}</p>
-            <p class="text-sm text-blue-200 mt-2">Próximo curso disponible</p>
+      <!-- Curso destacado 2026 -->
+      <div class="hidden lg:block">
+        <a href="/cursos/rehabilitacion-digital" class="block bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transition-all duration-300 hover:bg-white/15 hover:-translate-y-1">
+          <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">Curso 2026</span>
+          <p class="font-extrabold text-2xl leading-snug mb-3">Rehabilitación Digital</p>
+          <p class="text-blue-100 mb-4">De la planificación a la restauración definitiva.</p>
+          <div class="text-sm text-blue-200 space-y-1">
+            <p>📅 Sáb 14 y Dom 15 de noviembre 2026</p>
+            <p>📍 Academia Dental, Temuco</p>
           </div>
-        ))}
+        </a>
       </div>
     </div>
   </section>
