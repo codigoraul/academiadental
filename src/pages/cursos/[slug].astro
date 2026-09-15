@@ -82,14 +82,6 @@ if (fechaCurso) {
       <!-- Columna principal -->
       <div class="lg:col-span-2 space-y-10">
 
-        <!-- Imagen -->
-        {imagen !== '/placeholder-course.jpg' && (
-          <button type="button" class="js-lightbox group relative block w-full rounded-2xl overflow-hidden shadow-sm bg-primary/5 cursor-zoom-in" data-src={imagen} aria-label="Ver afiche completo">
-            <img src={imagen} alt={titulo} class="w-full aspect-[1024/900] object-cover object-top block" />
-            <span class="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 text-white text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm">Ver afiche completo <span aria-hidden="true">⤢</span></span>
-          </button>
-        )}
-
         <!-- Objetivo -->
         {acf.objetivo && (
           <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
@@ -167,6 +159,14 @@ if (fechaCurso) {
 
       <!-- Sidebar -->
       <aside class="space-y-6 lg:sticky lg:top-24 self-start">
+        {imagen !== '/placeholder-course.jpg' && (
+          <button type="button" class="js-lightbox group relative block w-full rounded-2xl overflow-hidden shadow-md bg-primary/5 cursor-zoom-in" data-src={imagen} aria-label="Ver afiche completo">
+            <img src={imagen} alt={titulo} class="w-full aspect-[1024/1180] object-cover object-top block transition-transform duration-300 group-hover:scale-[1.03]" />
+            <span class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
+              <span class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 bg-white/95 text-dark text-xs font-bold px-4 py-2 rounded-full shadow">Ver afiche completo <span aria-hidden="true">⤢</span></span>
+            </span>
+          </button>
+        )}
         <div class="bg-white rounded-2xl border border-light p-6 shadow-sm space-y-4">
           {acf.precio && (
             <div>
