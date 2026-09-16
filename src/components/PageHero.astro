@@ -27,7 +27,7 @@ const {
   <div class="relative z-10 max-w-7xl mx-auto">
     <!-- Breadcrumb -->
     {breadcrumb.length > 0 && (
-      <nav class="flex items-center gap-2 text-sm text-white/70 mb-2" aria-label="Breadcrumb">
+      <nav class="flex items-center gap-2 text-sm text-white/70 mb-1" aria-label="Breadcrumb">
         <a href="/" class="hover:text-white transition-colors">Inicio</a>
         {breadcrumb.map((item, i) => (
           <>
@@ -45,7 +45,7 @@ const {
     )}
 
     <!-- Title -->
-    <h1 class="text-3xl lg:text-[38px]  font-bold text-white leading-tight drop-shadow-sm">
+    <h1 class="text-3xl lg:text-[38px] font-bold text-white leading-tight drop-shadow-sm mt-[2px]">
       {title}
     </h1>
   </div>
