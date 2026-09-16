@@ -6,12 +6,31 @@ function wpFetch(url: string) {
   return fetch(`${url}${sep}_cb=${Date.now()}`, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' } });
 }
 
+// Si a un post le falta _embedded (p. ej. respuesta parcial de WP), resuelve la imagen destacada por su ID
+async function ensureFeaturedMedia(posts: any[]): Promise<any[]> {
+  await Promise.all(posts.map(async (p) => {
+    const has = p?._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+    if (has || !p?.featured_media) return;
+    try {
+      const r = await wpFetch(`${WP_API}/media/${p.featured_media}?_fields=id,source_url`);
+      if (!r.ok) return;
+      const m = await r.json();
+      if (m?.source_url) {
+        p._embedded = p._embedded ?? {};
+        p._embedded['wp:featuredmedia'] = [{ id: m.id, source_url: m.source_url }];
+      }
+    } catch {}
+  }));
+  return posts;
+}
+
 export async function getCursos(params: Record<string, string> = {}) {
   try {
     const query = new URLSearchParams({ per_page: '100', _embed: '1', ...params });
     const res = await wpFetch(`${WP_API}/curso?${query}`);
     if (!res.ok) return [];
-    return res.json();
+    const data = await res.json();
+    return Array.isArray(data) ? ensureFeaturedMedia(data) : [];
   } catch {
     return [];
   }
@@ -22,7 +41,9 @@ export async function getCursoBySlug(slug: string) {
     const res = await wpFetch(`${WP_API}/curso?slug=${slug}&_embed=1`);
     if (!res.ok) return null;
     const data = await res.json();
-    return data[0] ?? null;
+    const one = data[0] ?? null;
+    if (one) await ensureFeaturedMedia([one]);
+    return one;
   } catch {
     return null;
   }
