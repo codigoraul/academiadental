@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import PageHero from '../../components/PageHero.astro';
-import { getDocentes, getDocenteBySlug, getCursoById, getFeaturedImage, toParagraphs } from '../../lib/wp';
+import { getDocentes, getDocenteBySlug, getCursos, getFeaturedImage, toParagraphs } from '../../lib/wp';
 
 export async function getStaticPaths() {
   const docentes = await getDocentes();
@@ -17,19 +17,18 @@ const acf = docente.acf ?? {};
 const nombre = docente.title?.rendered ?? docente.title ?? '';
 const foto = acf.foto?.url ?? getFeaturedImage(docente);
 
-// Obtener datos completos de los cursos relacionados
-const cursosRelacionadosRaw = Array.isArray(acf.cursos_relacionados) ? acf.cursos_relacionados : [];
-const cursosRelacionados = await Promise.all(
-  cursosRelacionadosRaw.map(async (curso: any) => {
-    // Si el curso es solo un ID, obtener los datos completos
-    if (typeof curso === 'number' || curso.ID) {
-      const cursoId = typeof curso === 'number' ? curso : curso.ID;
-      return await getCursoById(cursoId);
-    }
-    // Si ya tiene los datos, devolverlo tal cual
-    return curso;
-  })
-).then(cursos => cursos.filter(Boolean)); // Filtrar nulls
+// Cursos donde este docente está asociado (derivado automáticamente desde los cursos)
+const docenteId = (docente as any).id ?? (docente as any).ID;
+const todosCursos = await getCursos();
+const cursosRelacionados = todosCursos.filter((c: any) => {
+  const asociados = Array.isArray(c.acf?.docente_asociado)
+    ? c.acf.docente_asociado
+    : (c.acf?.docente_asociado ? [c.acf.docente_asociado] : []);
+  return asociados.some((d: any) => {
+    const id = typeof d === 'number' ? d : (d?.ID ?? d?.id);
+    return id === docenteId;
+  });
+});
 ---
 
 <Layout title={`${nombre} — Academia Dental`} description={`Perfil de ${nombre}, docente de Academia Dental Clínica Milenium.`}>

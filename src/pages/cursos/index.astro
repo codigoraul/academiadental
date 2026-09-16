@@ -15,6 +15,23 @@ const cursosFiltrados = categoriaActiva === 'todos'
       const slugs = c.curso_categoria_slugs ?? [];
       return slugs.includes(categoriaActiva);
     });
+
+function anioDe(c: any): number | null {
+  const raw = String(c.acf?.fecha ?? '').trim();
+  if (/^\d{8}$/.test(raw)) { const y = +raw.slice(0, 4); return y > 2000 ? y : null; }
+  if (/^\d{4}-\d{2}-\d{2}/.test(raw)) { const y = +raw.slice(0, 4); return y > 2000 ? y : null; }
+  if (/^\d{4}$/.test(raw)) { const y = +raw; return y > 2000 ? y : null; }
+  return null;
+}
+const grupos: Record<string, any[]> = {};
+for (const c of cursosFiltrados) {
+  const y = anioDe(c);
+  const key = y ? String(y) : 'proximamente';
+  (grupos[key] ??= []).push(c);
+}
+const anios = Object.keys(grupos).sort((a, b) =>
+  (a === 'proximamente' ? 9999 : +a) - (b === 'proximamente' ? 9999 : +b)
+);
 ---
 
 <Layout title="Cursos de Odontología en Temuco | Academia Dental" description="Cursos de odontología en Temuco, Araucanía (Novena Región), Chile: ortodoncia, rehabilitación oral, implantología, endodoncia y odontología digital. Formación continua para odontólogos, dictada por especialistas." keywords="cursos de odontología Temuco, cursos dentales Araucanía, cursos de ortodoncia Temuco, cursos de rehabilitación oral Temuco, implantología Temuco, odontología digital Araucanía, educación continua odontología Chile, Academia Dental Temuco">
@@ -30,17 +47,28 @@ const cursosFiltrados = categoriaActiva === 'todos'
   <section class="py-16 px-6 bg-[#F9F9F9]">
     <div class="max-w-7xl mx-auto">
       {cursosFiltrados.length > 0 ? (
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cursosFiltrados.map((curso: any) => (
-            <CourseCard
-              title={curso.title?.rendered ?? curso.title}
-              slug={curso.slug}
-              image={getFeaturedImage(curso)}
-              categoria={curso.acf?.modalidad ?? ''}
-              modalidad={curso.acf?.modalidad ?? ''}
-              fecha={curso.acf?.fecha ?? ''}
-              precio={curso.acf?.precio ?? ''}
-            />
+        <div class="space-y-14">
+          {anios.map((anio) => (
+            <div>
+              <div class="flex items-center gap-4 mb-6">
+                <h2 class="text-2xl font-extrabold text-dark whitespace-nowrap">{anio === 'proximamente' ? 'Próximos cursos' : `Cursos ${anio}`}</h2>
+                <span class="h-px flex-1 bg-light"></span>
+                <span class="text-sm text-gray-400 font-medium">{grupos[anio].length} {grupos[anio].length === 1 ? 'curso' : 'cursos'}</span>
+              </div>
+              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {grupos[anio].map((curso: any) => (
+                  <CourseCard
+                    title={curso.title?.rendered ?? curso.title}
+                    slug={curso.slug}
+                    image={getFeaturedImage(curso)}
+                    categoria={curso.acf?.modalidad ?? ''}
+                    modalidad={curso.acf?.modalidad ?? ''}
+                    fecha={curso.acf?.fecha ?? ''}
+                    precio={curso.acf?.precio ?? ''}
+                  />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       ) : (
