@@ -1,9 +1,15 @@
 const WP_API = 'https://academiadental.cl/admin/wp-json/wp/v2';
 
+// Siempre datos frescos: evita respuestas cacheadas del hosting/CDN durante el build
+function wpFetch(url: string) {
+  const sep = url.includes('?') ? '&' : '?';
+  return fetch(`${url}${sep}_cb=${Date.now()}`, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' } });
+}
+
 export async function getCursos(params: Record<string, string> = {}) {
   try {
     const query = new URLSearchParams({ per_page: '100', _embed: '1', ...params });
-    const res = await fetch(`${WP_API}/curso?${query}`);
+    const res = await wpFetch(`${WP_API}/curso?${query}`);
     if (!res.ok) return [];
     return res.json();
   } catch {
@@ -13,7 +19,7 @@ export async function getCursos(params: Record<string, string> = {}) {
 
 export async function getCursoBySlug(slug: string) {
   try {
-    const res = await fetch(`${WP_API}/curso?slug=${slug}&_embed=1`);
+    const res = await wpFetch(`${WP_API}/curso?slug=${slug}&_embed=1`);
     if (!res.ok) return null;
     const data = await res.json();
     return data[0] ?? null;
@@ -24,7 +30,7 @@ export async function getCursoBySlug(slug: string) {
 
 export async function getCursoById(id: number) {
   try {
-    const res = await fetch(`${WP_API}/curso/${id}?_embed=1`);
+    const res = await wpFetch(`${WP_API}/curso/${id}?_embed=1`);
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -35,7 +41,7 @@ export async function getCursoById(id: number) {
 export async function getDocentes(params: Record<string, string> = {}) {
   try {
     const query = new URLSearchParams({ per_page: '100', _embed: '1', orderby: 'menu_order', order: 'asc', ...params });
-    const res = await fetch(`${WP_API}/docente?${query}`);
+    const res = await wpFetch(`${WP_API}/docente?${query}`);
     if (!res.ok) return [];
     return res.json();
   } catch {
@@ -45,7 +51,7 @@ export async function getDocentes(params: Record<string, string> = {}) {
 
 export async function getDocenteBySlug(slug: string) {
   try {
-    const res = await fetch(`${WP_API}/docente?slug=${slug}&_embed=1`);
+    const res = await wpFetch(`${WP_API}/docente?slug=${slug}&_embed=1`);
     if (!res.ok) return null;
     const data = await res.json();
     return data[0] ?? null;
@@ -56,7 +62,7 @@ export async function getDocenteBySlug(slug: string) {
 
 export async function getDocenteById(id: number) {
   try {
-    const res = await fetch(`${WP_API}/docente/${id}?_embed=1`);
+    const res = await wpFetch(`${WP_API}/docente/${id}?_embed=1`);
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -66,7 +72,7 @@ export async function getDocenteById(id: number) {
 
 export async function getCategoriasCurso() {
   try {
-    const res = await fetch(`${WP_API}/curso_categoria?per_page=50`);
+    const res = await wpFetch(`${WP_API}/curso_categoria?per_page=50`);
     if (!res.ok) return [];
     return res.json();
   } catch {
