@@ -54,6 +54,12 @@ const fechaLegible = fechaValida
   : (soloAnio ? `${fechaRaw} · Fecha por confirmar` : '');
 const mostrarFecha = fechaValida || soloAnio;
 
+// Inversión: si en WP se carga solo el número (450000 / 450.000) se muestra como "450.000.-"
+const precioRaw = String(acf.precio ?? '').trim();
+const inversion = /^[\d.]+$/.test(precioRaw)
+  ? Number(precioRaw.replace(/\./g, '')).toLocaleString('es-CL') + '.-'
+  : precioRaw;
+
 const pad = (n: number) => String(n).padStart(2, '0');
 const gcalDate = (date: Date) => `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
 
@@ -209,12 +215,6 @@ const cursoSchema = {
           </button>
         )}
         <div class="bg-white rounded-2xl border border-light p-6 shadow-sm space-y-4">
-          {acf.precio && (
-            <div>
-              <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-1">Precio</p>
-              <p class="text-2xl font-extrabold text-primary">{acf.precio}</p>
-            </div>
-          )}
           {mostrarFecha && (
             <div class="border-t border-light pt-4">
               <div class="flex items-center gap-3 text-sm text-dark">
@@ -260,6 +260,12 @@ const cursoSchema = {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
               <span><strong>Cupos:</strong> {acf.cupos}</span>
+            </div>
+          )}
+          {inversion && (
+            <div class="border-t border-light pt-4">
+              <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-1">Inversión</p>
+              <p class="text-2xl font-extrabold text-primary">{inversion}</p>
             </div>
           )}
           <div class="pt-2 space-y-3">
