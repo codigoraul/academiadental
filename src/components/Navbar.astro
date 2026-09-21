@@ -1,15 +1,18 @@
 ---
-const navLinks = [
-  { href: '/', label: 'Inicio' },
-  { href: '/cursos', label: 'Cursos' },
-  { href: '/docentes', label: 'Docentes' },
-  { href: '/metodologia', label: 'Metodología' },
-  { href: '/certificacion', label: 'Certificación' },
-  { href: '/sponsors', label: 'Sponsors' },
-  { href: '/contacto', label: 'Contacto' },
-];
+const base = import.meta.env.BASE_URL;
 
-const currentPath = Astro.url.pathname;
+const navLinks = [
+  { path: '', label: 'Inicio' },
+  { path: 'cursos', label: 'Cursos' },
+  { path: 'docentes', label: 'Docentes' },
+  { path: 'metodologia', label: 'Metodología' },
+  { path: 'certificacion', label: 'Certificación' },
+  { path: 'sponsors', label: 'Sponsors' },
+  { path: 'contacto', label: 'Contacto' },
+].map(l => ({ ...l, href: `${base}${l.path}` }));
+
+const norm = (u: string) => ('/' + u.replace(/^\/+|\/+$/g, '')) || '/';
+const currentPath = norm(Astro.url.pathname);
 ---
 
 <header class="sticky top-0 z-50 bg-white border-b border-light shadow-sm" id="navbar">
@@ -25,7 +28,7 @@ const currentPath = Astro.url.pathname;
         <a
           href={link.href}
           class={`text-base font-medium whitespace-nowrap transition-colors hover:text-secondary ${
-            currentPath === link.href ? 'text-primary border-b-2 border-primary pb-0.5' : 'text-dark'
+            currentPath === norm(link.href) ? 'text-primary border-b-2 border-primary pb-0.5' : 'text-dark'
           }`}
         >
           {link.label}
@@ -58,7 +61,7 @@ const currentPath = Astro.url.pathname;
         <a
           href={link.href}
           class={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary ${
-            currentPath === link.href ? 'text-primary font-semibold bg-blue-50' : 'text-dark'
+            currentPath === norm(link.href) ? 'text-primary font-semibold bg-blue-50' : 'text-dark'
           }`}
         >
           {link.label}

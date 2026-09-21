@@ -1,0 +1,69 @@
+---
+const base = import.meta.env.BASE_URL;
+const afiche = `${base}images/afiche-preinscripcion-2027.webp`;
+const waLink = 'https://wa.me/56998447356?text=Hola%2C%20quiero%20pre%20inscribirme%20a%20los%20cursos%202027%20de%20Academia%20Dental';
+---
+
+<!-- PRE INSCRIPCIÓN 2027 -->
+<section id="preinscripcion" class="py-20 px-6 bg-white">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <button type="button" class="js-lightbox group relative block w-full rounded-2xl overflow-hidden border border-light shadow-sm hover:shadow-lg transition-shadow cursor-zoom-in" data-src={afiche} aria-label="Ver afiche completo">
+      <img
+        src={afiche}
+        alt="Ya puedes pre inscribirte a nuestros cursos 2027 - Academia Dental"
+        loading="lazy"
+        width="853"
+        height="1280"
+        class="w-full h-auto"
+      />
+      <span class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 bg-white/95 text-dark text-xs font-bold px-4 py-2 rounded-full shadow">Ver afiche completo <span aria-hidden="true">⤢</span></span>
+      </span>
+    </button>
+    <div>
+      <span class="inline-block bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">Pre inscripción abierta</span>
+      <h2 class="text-3xl font-extrabold text-dark mb-4">Pre inscríbete a nuestros cursos 2027</h2>
+      <p class="text-gray-500 leading-relaxed mb-6">
+        Déjanos tus datos y sé parte de la próxima generación de profesionales que siguen creciendo con nosotros.
+      </p>
+      <ul class="space-y-3 mb-8 text-sm text-dark">
+        <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Recibe primero las fechas oficiales</li>
+        <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Información exclusiva</li>
+        <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Acceso prioritario a cupos</li>
+        <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Sé parte de nuestra comunidad</li>
+      </ul>
+      <a href={waLink} target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+        Pre inscríbete aquí
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox afiche -->
+<div id="lightbox" class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/90 p-4" role="dialog" aria-modal="true">
+  <button id="lightbox-close" class="absolute top-4 right-5 text-white text-4xl leading-none" aria-label="Cerrar">&times;</button>
+  <div class="flex flex-col items-center gap-4">
+    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] rounded-lg" />
+    <a href={waLink} target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+      Pre inscríbete por WhatsApp
+    </a>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const box = document.getElementById('lightbox');
+    const boxImg = document.getElementById('lightbox-img');
+    const close = document.getElementById('lightbox-close');
+    if (!box) return;
+    function open(src) { boxImg.src = src; box.classList.remove('hidden'); box.classList.add('flex'); document.body.style.overflow = 'hidden'; }
+    function hide() { box.classList.add('hidden'); box.classList.remove('flex'); boxImg.src = ''; document.body.style.overflow = ''; }
+    document.querySelectorAll('.js-lightbox').forEach(function (el) {
+      el.addEventListener('click', function () { open(el.getAttribute('data-src')); });
+    });
+    close.addEventListener('click', hide);
+    box.addEventListener('click', function (e) { if (e.target === box) hide(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
+  })();
+</script>

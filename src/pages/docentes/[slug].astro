@@ -35,7 +35,7 @@ const cursosRelacionados = todosCursos.filter((c: any) => {
 
   <PageHero
     title={nombre.replace(/<[^>]+>/g, '')}
-    breadcrumb={[{ label: 'Docentes', href: '/docentes' }, { label: nombre.replace(/<[^>]+>/g, '') }]}
+    breadcrumb={[{ label: 'Docentes', href: `${import.meta.env.BASE_URL}docentes` }, { label: nombre.replace(/<[^>]+>/g, '') }]}
   />
 
   <section class="py-16 px-6 bg-[#F5F7FA]">

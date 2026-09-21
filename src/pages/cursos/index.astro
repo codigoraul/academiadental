@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import PageHero from '../../components/PageHero.astro';
 import { getCursos, getCategoriasCurso, getFeaturedImage } from '../../lib/wp';
+import PreInscripcion from '../../components/PreInscripcion.astro';
 
 const categorias = await getCategoriasCurso();
 const cursos = await getCursos();
@@ -82,5 +83,7 @@ const anios = Object.keys(grupos).sort((a, b) =>
       )}
     </div>
   </section>
+
+  <PreInscripcion />
 
 </Layout>

@@ -115,7 +115,7 @@ const cursoSchema = {
 
   <PageHero
     title={titulo.replace(/<[^>]+>/g, '')}
-    breadcrumb={[{ label: 'Cursos', href: '/cursos' }, { label: titulo.replace(/<[^>]+>/g, '') }]}
+    breadcrumb={[{ label: 'Cursos', href: `${import.meta.env.BASE_URL}cursos` }, { label: titulo.replace(/<[^>]+>/g, '') }]}
   />
 
   <!-- Contenido -->
