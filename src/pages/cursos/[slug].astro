@@ -167,7 +167,7 @@ const cursoSchema = {
             <h2 class="text-xl font-bold text-dark mb-5">{docentes.length > 1 ? 'Docentes del curso' : 'Docente del curso'}</h2>
             <div class="space-y-6">
               {docentes.map((docente: any) => (
-                <a href={`/docentes/${docente.slug ?? docente.post_name}`} class="flex items-center gap-5 hover:opacity-80 transition-opacity">
+                <a href={`${import.meta.env.BASE_URL}docentes/${docente.slug ?? docente.post_name}`} class="flex items-center gap-5 hover:opacity-80 transition-opacity">
                   {docente.acf?.foto?.url && (
                     <img src={docente.acf.foto.url} alt={docente.title?.rendered ?? docente.post_title} class="w-16 h-16 rounded-full object-cover border-2 border-light shrink-0" />
                   )}

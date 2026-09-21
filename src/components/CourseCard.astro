@@ -32,7 +32,7 @@ const fechaLabel = formatFecha(fecha);
 ---
 
 <article class="bg-white rounded-2xl shadow-sm border border-light overflow-hidden hover:shadow-md transition-shadow group">
-  <a href={`/cursos/${slug}`} class="block relative h-48 overflow-hidden bg-light">
+  <a href={`${import.meta.env.BASE_URL}cursos/${slug}`} class="block relative h-48 overflow-hidden bg-light">
     <img
       src={image}
       alt={title}
@@ -46,7 +46,7 @@ const fechaLabel = formatFecha(fecha);
     )}
   </a>
   <div class="p-5">
-    <a href={`/cursos/${slug}`}>
+    <a href={`${import.meta.env.BASE_URL}cursos/${slug}`}>
       <h3 class="font-bold text-dark text-lg mb-3 leading-snug group-hover:text-primary transition-colors">
         {title}
       </h3>
@@ -75,7 +75,7 @@ const fechaLabel = formatFecha(fecha);
       )}
     </div>
     <a
-      href={`/cursos/${slug}`}
+      href={`${import.meta.env.BASE_URL}cursos/${slug}`}
       class="block w-full text-center bg-primary hover:bg-secondary text-white text-sm font-semibold py-2.5 rounded-xl transition-colors"
     >
       Ver más

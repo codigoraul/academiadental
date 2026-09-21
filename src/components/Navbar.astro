@@ -15,8 +15,8 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 bg-white border-b border-light shadow-sm" id="navbar">
   <div class="max-w-7xl mx-auto px-4 xl:px-6 py-4 flex items-center justify-between">
     <!-- Logo -->
-    <a href="/" class="flex items-center">
-      <img src="/academia-dental-ad.svg" alt="Academia Dental" class="h-9 xl:h-10 w-auto" />
+    <a href={`${import.meta.env.BASE_URL}`} class="flex items-center">
+      <img src={`${import.meta.env.BASE_URL}academia-dental-ad.svg`} alt="Academia Dental" class="h-9 xl:h-10 w-auto" />
     </a>
 
     <!-- Nav desktop -->
@@ -36,7 +36,7 @@ const currentPath = Astro.url.pathname;
     <!-- CTA -->
     <div class="hidden lg:flex items-center gap-3">
       <a
-        href="/cursos"
+        href={`${import.meta.env.BASE_URL}cursos`}
         class="bg-primary text-white px-4 py-2 xl:px-5 xl:py-2.5 rounded-full text-base font-semibold whitespace-nowrap hover:bg-secondary transition-colors"
       >
         Ver Cursos
@@ -65,7 +65,7 @@ const currentPath = Astro.url.pathname;
         </a>
       ))}
       <a
-        href="/cursos"
+        href={`${import.meta.env.BASE_URL}cursos`}
         class="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-secondary transition-colors text-center mt-2"
       >
         Ver Cursos

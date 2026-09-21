@@ -9,7 +9,7 @@ interface Props {
 const {
   title,
   breadcrumb = [],
-  image = '/images/bg-title.webp',
+  image = `${import.meta.env.BASE_URL}images/bg-title.webp`,
   imagePosition = 'center 70%',
 } = Astro.props;
 ---
@@ -28,7 +28,7 @@ const {
     <!-- Breadcrumb -->
     {breadcrumb.length > 0 && (
       <nav class="flex items-center gap-2 text-sm text-white/70 mb-0 leading-none" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-white transition-colors">Inicio</a>
+        <a href={`${import.meta.env.BASE_URL}`} class="hover:text-white transition-colors">Inicio</a>
         {breadcrumb.map((item, i) => (
           <>
             <svg class="w-3.5 h-3.5 text-white/40 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

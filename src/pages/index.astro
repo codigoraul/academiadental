@@ -10,7 +10,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
 <Layout title="Academia Dental Temuco | Cursos de Odontología en la Araucanía" description="Academia Dental en Temuco: cursos de odontología presenciales y prácticos en la Araucanía (Novena Región), Chile. Ortodoncia, rehabilitación, implantología y odontología digital dictados por especialistas." keywords="Academia Dental Temuco, cursos de odontología Temuco, cursos dentales Araucanía, formación odontológica Novena Región, educación continua odontología Chile, cursos de ortodoncia y rehabilitación Temuco">
 
   <!-- HERO SLIDER -->
-  <section id="hero" class="relative text-white py-24 px-6 overflow-hidden" style="background-image: url('/images/hero-bg-temuco.webp'); background-size: cover; background-position: center;">
+  <section id="hero" class="relative text-white py-24 px-6 overflow-hidden" style={`background-image: url('${import.meta.env.BASE_URL}images/hero-bg-temuco.webp'); background-size: cover; background-position: center;`}>
     <div class="absolute inset-0" style="background: linear-gradient(120deg, rgba(8, 26, 64, 0.86) 0%, rgba(10, 35, 84, 0.72) 45%, rgba(10, 30, 74, 0.82) 100%);"></div>
 
     <div id="hero-slider" class="relative z-10 max-w-7xl mx-auto grid" data-active="0">
@@ -28,16 +28,16 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
             Cursos presenciales y híbridos dictados por especialistas. Aprende, practica y certifícate.
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href="/cursos" class="bg-white text-primary font-bold px-7 py-3.5 rounded-full hover:bg-blue-50 transition-colors">
+            <a href={`${import.meta.env.BASE_URL}cursos`} class="bg-white text-primary font-bold px-7 py-3.5 rounded-full hover:bg-blue-50 transition-colors">
               Ver Cursos
             </a>
-            <a href="/contacto" class="border-2 border-white text-white font-bold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors">
+            <a href={`${import.meta.env.BASE_URL}contacto`} class="border-2 border-white text-white font-bold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors">
               Contáctanos
             </a>
           </div>
         </div>
         <div class="hidden lg:block">
-          <a href="/cursos/rehabilitacion-digital" class="group block bg-[#0b1f45]/95 backdrop-blur-md border border-secondary/50 rounded-2xl p-8 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-secondary hover:shadow-secondary/20">
+          <a href={`${import.meta.env.BASE_URL}cursos/rehabilitacion-digital`} class="group block bg-[#0b1f45]/95 backdrop-blur-md border border-secondary/50 rounded-2xl p-8 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-secondary hover:shadow-secondary/20">
             <span class="inline-flex items-center gap-2 bg-secondary text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-5">
               <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Curso 2026 · Inscripciones abiertas
             </span>
@@ -191,7 +191,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
           <h2 class="text-3xl font-extrabold text-dark mb-2">Cursos 2026</h2>
           <p class="text-gray-500">Nuestro próximo curso disponible.</p>
         </div>
-        <a href="/cursos" class="hidden md:inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-secondary transition-colors">
+        <a href={`${import.meta.env.BASE_URL}cursos`} class="hidden md:inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-secondary transition-colors">
           Ver todos <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>
@@ -220,7 +220,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
               </div>
               <span class="inline-block bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">Curso</span>
               <h3 class="font-bold text-dark mb-4">{nombre}</h3>
-              <a href="/cursos" class="block text-center bg-primary hover:bg-secondary text-white text-sm font-semibold py-2.5 rounded-xl transition-colors">Ver más</a>
+              <a href={`${import.meta.env.BASE_URL}cursos`} class="block text-center bg-primary hover:bg-secondary text-white text-sm font-semibold py-2.5 rounded-xl transition-colors">Ver más</a>
             </div>
           ))}
         </div>
@@ -231,9 +231,9 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
   <!-- PRE INSCRIPCIÓN 2027 -->
   <section id="preinscripcion" class="py-20 px-6 bg-white">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-      <button type="button" class="js-lightbox group relative block w-full rounded-2xl overflow-hidden border border-light shadow-sm hover:shadow-lg transition-shadow cursor-zoom-in" data-src="/images/afiche-preinscripcion-2027.webp" aria-label="Ver afiche completo">
+      <button type="button" class="js-lightbox group relative block w-full rounded-2xl overflow-hidden border border-light shadow-sm hover:shadow-lg transition-shadow cursor-zoom-in" data-src={`${import.meta.env.BASE_URL}images/afiche-preinscripcion-2027.webp`} aria-label="Ver afiche completo">
         <img
-          src="/images/afiche-preinscripcion-2027.webp"
+          src={`${import.meta.env.BASE_URL}images/afiche-preinscripcion-2027.webp`}
           alt="Ya puedes pre inscribirte a nuestros cursos 2027 - Academia Dental"
           loading="lazy"
           width="853"
@@ -272,7 +272,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
         <p class="text-blue-100 leading-relaxed mb-6">
           Cada programa está diseñado para llevar el conocimiento teórico directamente a la práctica clínica. Trabajamos con pequeños grupos para garantizar una experiencia personalizada de alto impacto.
         </p>
-        <a href="/metodologia" class="inline-flex items-center gap-2 text-white font-semibold border-b border-white/50 hover:border-white pb-0.5 transition-colors">
+        <a href={`${import.meta.env.BASE_URL}metodologia`} class="inline-flex items-center gap-2 text-white font-semibold border-b border-white/50 hover:border-white pb-0.5 transition-colors">
           Conoce más <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>

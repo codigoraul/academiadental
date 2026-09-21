@@ -18,7 +18,7 @@ const initials = (name ?? '').split(' ').filter((w) => w.length > 2).slice(0, 2)
 <article class="teacher-card group">
 
   {slug ? (
-    <a href={`/docentes/${slug}`} class="photo-wrap">
+    <a href={`${import.meta.env.BASE_URL}docentes/${slug}`} class="photo-wrap">
       {image ? (
         <img src={image} alt={name} class="photo-img" loading="lazy" />
       ) : (
@@ -39,7 +39,7 @@ const initials = (name ?? '').split(' ').filter((w) => w.length > 2).slice(0, 2)
 
   <div class="card-body">
     {slug ? (
-      <a href={`/docentes/${slug}`} class="card-name-link">
+      <a href={`${import.meta.env.BASE_URL}docentes/${slug}`} class="card-name-link">
         <h2 class="card-name text-3xl">{name}</h2>
       </a>
     ) : (
@@ -51,7 +51,7 @@ const initials = (name ?? '').split(' ').filter((w) => w.length > 2).slice(0, 2)
     )}
     {shortBio && <p class="card-bio">{shortBio}</p>}
     {slug && (
-      <a href={`/docentes/${slug}`} class="card-btn">Ver perfil →</a>
+      <a href={`${import.meta.env.BASE_URL}docentes/${slug}`} class="card-btn">Ver perfil →</a>
     )}
   </div>
 

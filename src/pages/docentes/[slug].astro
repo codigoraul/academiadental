@@ -95,7 +95,7 @@ const cursosRelacionados = todosCursos.filter((c: any) => {
           {acf.cargo && <p class="text-blue-200 text-sm font-medium mb-1">{acf.cargo}</p>}
           {acf.especialidad && <p class="text-blue-100 text-sm mb-4">{acf.especialidad}</p>}
           <p class="text-sm text-blue-100/90 mb-4">¿Te interesa un curso con {nombre.replace(/<[^>]+>/g, '')}?</p>
-          <a href="/contacto" class="block w-full bg-white/15 hover:bg-white/25 text-white font-bold py-3 rounded-xl transition-colors text-sm mb-3">
+          <a href={`${import.meta.env.BASE_URL}contacto`} class="block w-full bg-white/15 hover:bg-white/25 text-white font-bold py-3 rounded-xl transition-colors text-sm mb-3">
             Consultar disponibilidad
           </a>
           <a href="https://wa.me/56998447356" target="_blank" class="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-400 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
