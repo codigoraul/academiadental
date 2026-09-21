@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+
+// Reemplazar `logo` por la ruta real cuando lleguen los archivos (ej: '/images/sponsors/ivoclar.svg')
+const sponsors = [
+  { nombre: 'Empresa 1', rubro: 'Insumos dentales', web: '', logo: '' },
+  { nombre: 'Empresa 2', rubro: 'Equipamiento clínico', web: '', logo: '' },
+  { nombre: 'Empresa 3', rubro: 'Laboratorio dental', web: '', logo: '' },
+  { nombre: 'Empresa 4', rubro: 'Tecnología CAD/CAM', web: '', logo: '' },
+  { nombre: 'Empresa 5', rubro: 'Biomateriales', web: '', logo: '' },
+  { nombre: 'Empresa 6', rubro: 'Distribución', web: '', logo: '' },
+];
+---
+
+<Layout title="Sponsors — Academia Dental" description="Empresas que auspician y acompañan la formación de Academia Dental en Temuco.">
+
+  <PageHero
+    title="Sponsors"
+    breadcrumb={[{ label: 'Sponsors' }]}
+    image="/images/bg-contacto.webp"
+    imagePosition="center 35%"
+  />
+
+  <!-- LISTADO -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-5xl mx-auto text-center mb-14">
+      <h2 class="text-3xl font-extrabold text-dark mb-4">Empresas que nos acompañan</h2>
+      <p class="text-gray-500 leading-relaxed max-w-2xl mx-auto">
+        Nuestros cursos son posibles gracias a las marcas que apoyan la formación clínica continua en la región.
+      </p>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6">
+      {sponsors.map(s => (
+        <a
+          href={s.web || '#'}
+          target={s.web ? '_blank' : undefined}
+          rel={s.web ? 'noopener' : undefined}
+          class="group bg-white border border-light rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow"
+        >
+          <div class="h-20 w-full flex items-center justify-center mb-4">
+            {s.logo ? (
+              <img src={s.logo} alt={s.nombre} loading="lazy" class="max-h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition" />
+            ) : (
+              <span class="text-lg font-extrabold text-dark/30 tracking-wide">{s.nombre}</span>
+            )}
+          </div>
+          <h3 class="font-bold text-dark text-sm">{s.nombre}</h3>
+          <p class="text-xs text-gray-500 mt-1">{s.rubro}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA AUSPICIAR -->
+  <section class="py-20 px-6 text-white" style="background-color:#0E3A6B">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-extrabold mb-4">¿Quieres auspiciar nuestros cursos?</h2>
+      <p class="text-blue-100 leading-relaxed mb-8 max-w-2xl mx-auto">
+        Si tu empresa quiere llegar a odontólogos en formación continua de La Araucanía, conversemos.
+        Te enviamos el plan de auspicios con alcance, formatos y valores.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="mailto:drmilenium@gmail.com" class="inline-flex items-center justify-center gap-2 bg-white text-primary font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors">
+          drmilenium@gmail.com
+        </a>
+        <a href="https://wa.me/56998447356?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20auspicios%20en%20Academia%20Dental" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+          WhatsApp +56 9 9844 7356
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

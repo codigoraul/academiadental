@@ -9,46 +9,144 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
 
 <Layout title="Academia Dental Temuco | Cursos de Odontología en la Araucanía" description="Academia Dental en Temuco: cursos de odontología presenciales y prácticos en la Araucanía (Novena Región), Chile. Ortodoncia, rehabilitación, implantología y odontología digital dictados por especialistas." keywords="Academia Dental Temuco, cursos de odontología Temuco, cursos dentales Araucanía, formación odontológica Novena Región, educación continua odontología Chile, cursos de ortodoncia y rehabilitación Temuco">
 
-  <!-- HERO -->
+  <!-- HERO SLIDER -->
   <section id="hero" class="relative text-white py-24 px-6 overflow-hidden" style="background-image: url('/images/hero-bg-temuco.webp'); background-size: cover; background-position: center;">
     <div class="absolute inset-0" style="background: linear-gradient(120deg, rgba(8, 26, 64, 0.86) 0%, rgba(10, 35, 84, 0.72) 45%, rgba(10, 30, 74, 0.82) 100%);"></div>
-    <div class="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <span class="inline-block bg-white/20 text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-          Clínica Milenium — Formación Continua
-        </span>
-        <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
-          Formación Clínica de Alto Nivel para Odontólogos
-        </h1>
-        <p class="text-xl text-blue-100 mb-8 leading-relaxed">
-          Cursos presenciales y híbridos dictados por especialistas. Aprende, practica y certifícate.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="/cursos" class="bg-white text-primary font-bold px-7 py-3.5 rounded-full hover:bg-blue-50 transition-colors">
-            Ver Cursos
-          </a>
-          <a href="/contacto" class="border-2 border-white text-white font-bold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors">
-            Contáctanos
+
+    <div id="hero-slider" class="relative z-10 max-w-7xl mx-auto grid" data-active="0">
+
+      <!-- SLIDE 1 -->
+      <div class="hero-slide col-start-1 row-start-1 grid lg:grid-cols-2 gap-12 items-center transition-opacity duration-500" data-slide="0">
+        <div>
+          <span class="inline-block bg-white/20 text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+            Clínica Milenium — Formación Continua
+          </span>
+          <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
+            Formación Clínica de Alto Nivel para Odontólogos
+          </h1>
+          <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+            Cursos presenciales y híbridos dictados por especialistas. Aprende, practica y certifícate.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/cursos" class="bg-white text-primary font-bold px-7 py-3.5 rounded-full hover:bg-blue-50 transition-colors">
+              Ver Cursos
+            </a>
+            <a href="/contacto" class="border-2 border-white text-white font-bold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors">
+              Contáctanos
+            </a>
+          </div>
+        </div>
+        <div class="hidden lg:block">
+          <a href="/cursos/rehabilitacion-digital" class="group block bg-[#0b1f45]/95 backdrop-blur-md border border-secondary/50 rounded-2xl p-8 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-secondary hover:shadow-secondary/20">
+            <span class="inline-flex items-center gap-2 bg-secondary text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-5">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Curso 2026 · Inscripciones abiertas
+            </span>
+            <p class="font-extrabold text-3xl leading-tight mb-3 text-white">Rehabilitación Digital</p>
+            <p class="text-blue-100 mb-5">De la planificación a la restauración definitiva.</p>
+            <div class="text-sm text-blue-100 space-y-1.5 border-t border-white/10 pt-4">
+              <p class="flex items-center gap-2"><svg class="w-4 h-4 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>Sáb 14 y Dom 15 de noviembre 2026</p>
+              <p class="flex items-center gap-2"><svg class="w-4 h-4 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>Academia Dental, Temuco</p>
+            </div>
+            <span class="inline-flex items-center gap-2 mt-5 text-secondary font-bold group-hover:gap-3 transition-all">Ver curso <span aria-hidden="true">→</span></span>
           </a>
         </div>
       </div>
-      <!-- Curso destacado 2026 -->
-      <div class="hidden lg:block">
-        <a href="/cursos/rehabilitacion-digital" class="group block bg-[#0b1f45]/95 backdrop-blur-md border border-secondary/50 rounded-2xl p-8 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-secondary hover:shadow-secondary/20">
-          <span class="inline-flex items-center gap-2 bg-secondary text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-5">
-            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Curso 2026 · Inscripciones abiertas
+
+      <!-- SLIDE 2 · PRE INSCRIPCIÓN 2027 -->
+      <div class="hero-slide col-start-1 row-start-1 grid lg:grid-cols-2 gap-12 items-center transition-opacity duration-500 opacity-0 pointer-events-none" data-slide="1" aria-hidden="true">
+        <div>
+          <span class="inline-flex items-center gap-2 bg-secondary text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Pre inscripción abierta
           </span>
-          <p class="font-extrabold text-3xl leading-tight mb-3 text-white">Rehabilitación Digital</p>
-          <p class="text-blue-100 mb-5">De la planificación a la restauración definitiva.</p>
-          <div class="text-sm text-blue-100 space-y-1.5 border-t border-white/10 pt-4">
-            <p class="flex items-center gap-2"><svg class="w-4 h-4 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>Sáb 14 y Dom 15 de noviembre 2026</p>
-            <p class="flex items-center gap-2"><svg class="w-4 h-4 text-secondary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>Academia Dental, Temuco</p>
+          <h2 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
+            Ya puedes pre inscribirte a nuestros Cursos 2027
+          </h2>
+          <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+            Déjanos tus datos y sé parte de la próxima generación de profesionales que siguen creciendo con nosotros.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="https://wa.me/56998447356?text=Hola%2C%20quiero%20pre%20inscribirme%20a%20los%20cursos%202027%20de%20Academia%20Dental" target="_blank" rel="noopener" class="bg-white text-primary font-bold px-7 py-3.5 rounded-full hover:bg-blue-50 transition-colors">
+              Pre inscríbete aquí
+            </a>
+            <a href="#preinscripcion" class="border-2 border-white text-white font-bold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors">
+              Ver más
+            </a>
           </div>
-          <span class="inline-flex items-center gap-2 mt-5 text-secondary font-bold group-hover:gap-3 transition-all">Ver curso <span aria-hidden="true">→</span></span>
-        </a>
+        </div>
+        <div class="hidden lg:grid grid-cols-2 gap-4">
+          {[
+            { t: 'Recibe primero', d: 'las fechas oficiales', icon: 'M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0' },
+            { t: 'Información', d: 'exclusiva', icon: 'M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75' },
+            { t: 'Acceso prioritario', d: 'a cupos', icon: 'M11.48 3.5a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z' },
+            { t: 'Sé parte', d: 'de nuestra comunidad', icon: 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' },
+          ].map(item => (
+            <div class="bg-white/10 border border-white/20 rounded-2xl p-5 backdrop-blur-sm">
+              <svg class="w-7 h-7 mb-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d={item.icon} />
+              </svg>
+              <p class="font-bold text-base mb-0.5">{item.t}</p>
+              <p class="text-sm text-blue-100">{item.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles -->
+    <div class="relative z-10 max-w-7xl mx-auto mt-10 flex items-center gap-3">
+      <button type="button" id="hero-prev" aria-label="Anterior" class="w-10 h-10 rounded-full border border-white/40 hover:bg-white/15 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button type="button" id="hero-next" aria-label="Siguiente" class="w-10 h-10 rounded-full border border-white/40 hover:bg-white/15 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <div class="flex gap-2 ml-2">
+        <button type="button" class="hero-dot w-8 h-1.5 rounded-full bg-white transition-colors" data-goto="0" aria-label="Ir al slide 1"></button>
+        <button type="button" class="hero-dot w-8 h-1.5 rounded-full bg-white/35 transition-colors" data-goto="1" aria-label="Ir al slide 2"></button>
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    (() => {
+      const slider = document.getElementById('hero-slider');
+      if (!slider) return;
+      const slides = [...slider.querySelectorAll('.hero-slide')];
+      const dots = [...document.querySelectorAll('.hero-dot')];
+      let i = 0;
+      let timer = null;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const go = (n) => {
+        i = (n + slides.length) % slides.length;
+        slides.forEach((s, k) => {
+          const on = k === i;
+          s.classList.toggle('opacity-0', !on);
+          s.classList.toggle('pointer-events-none', !on);
+          s.setAttribute('aria-hidden', String(!on));
+        });
+        dots.forEach((d, k) => {
+          d.classList.toggle('bg-white', k === i);
+          d.classList.toggle('bg-white/35', k !== i);
+        });
+      };
+
+      const start = () => { if (!reduce) timer = setInterval(() => go(i + 1), 7000); };
+      const stop = () => { if (timer) clearInterval(timer); timer = null; };
+
+      document.getElementById('hero-prev')?.addEventListener('click', () => { stop(); go(i - 1); start(); });
+      document.getElementById('hero-next')?.addEventListener('click', () => { stop(); go(i + 1); start(); });
+      dots.forEach(d => d.addEventListener('click', () => { stop(); go(Number(d.dataset.goto)); start(); }));
+
+      const hero = document.getElementById('hero');
+      hero?.addEventListener('mouseenter', stop);
+      hero?.addEventListener('mouseleave', start);
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+
+      go(0);
+      start();
+    })();
+  </script>
 
   <!-- VENTAJAS -->
   <section class="py-20 px-6 bg-white">
@@ -86,7 +184,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
   </section>
 
   <!-- CURSOS DESTACADOS -->
-  <section class="py-20 px-6 bg-[#F9F9F9]">
+  <section class="py-20 px-6 bg-[#F5F7FA]">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-end justify-between mb-10">
         <div>
@@ -130,8 +228,44 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
     </div>
   </section>
 
+  <!-- PRE INSCRIPCIÓN 2027 -->
+  <section id="preinscripcion" class="py-20 px-6 bg-white">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <button type="button" class="js-lightbox group relative block w-full rounded-2xl overflow-hidden border border-light shadow-sm hover:shadow-lg transition-shadow cursor-zoom-in" data-src="/images/afiche-preinscripcion-2027.webp" aria-label="Ver afiche completo">
+        <img
+          src="/images/afiche-preinscripcion-2027.webp"
+          alt="Ya puedes pre inscribirte a nuestros cursos 2027 - Academia Dental"
+          loading="lazy"
+          width="853"
+          height="1280"
+          class="w-full h-auto"
+        />
+        <span class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
+          <span class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 bg-white/95 text-dark text-xs font-bold px-4 py-2 rounded-full shadow">Ver afiche completo <span aria-hidden="true">⤢</span></span>
+        </span>
+      </button>
+      <div>
+        <span class="inline-block bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">Pre inscripción abierta</span>
+        <h2 class="text-3xl font-extrabold text-dark mb-4">Pre inscríbete a nuestros cursos 2027</h2>
+        <p class="text-gray-500 leading-relaxed mb-6">
+          Déjanos tus datos y sé parte de la próxima generación de profesionales que siguen creciendo con nosotros.
+        </p>
+        <ul class="space-y-3 mb-8 text-sm text-dark">
+          <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Recibe primero las fechas oficiales</li>
+          <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Información exclusiva</li>
+          <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Acceso prioritario a cupos</li>
+          <li class="flex items-start gap-3"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0"></span> Sé parte de nuestra comunidad</li>
+        </ul>
+        <a href="https://wa.me/56998447356?text=Hola%2C%20quiero%20pre%20inscribirme%20a%20los%20cursos%202027%20de%20Academia%20Dental" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+          Pre inscríbete aquí
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- METODOLOGÍA RESUMIDA -->
-  <section class="py-20 px-6 bg-primary text-white">
+  <section class="py-20 px-6 text-white" style="background-color:#0E3A6B">
     <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
       <div>
         <h2 class="text-3xl font-extrabold mb-4">Nuestra Metodología</h2>
@@ -202,7 +336,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
       <div class="text-center mt-6">
         <span class="text-gray-400 text-sm">o contáctanos directo por</span>
         <a
-          href="https://wa.me/56912345678"
+          href="https://wa.me/56998447356"
           target="_blank"
           class="flex items-center justify-center gap-2 mt-3 bg-green-500 hover:bg-green-400 text-white font-semibold py-3 rounded-xl transition-colors"
         >
@@ -214,5 +348,33 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
       </div>
     </div>
   </section>
+
+  <!-- Lightbox afiche -->
+  <div id="lightbox" class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/90 p-4" role="dialog" aria-modal="true">
+    <button id="lightbox-close" class="absolute top-4 right-5 text-white text-4xl leading-none" aria-label="Cerrar">&times;</button>
+    <div class="flex flex-col items-center gap-4">
+      <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] rounded-lg" />
+      <a href="https://wa.me/56998447356?text=Hola%2C%20quiero%20pre%20inscribirme%20a%20los%20cursos%202027%20de%20Academia%20Dental" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+        Pre inscríbete por WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const box = document.getElementById('lightbox');
+      const boxImg = document.getElementById('lightbox-img');
+      const close = document.getElementById('lightbox-close');
+      if (!box) return;
+      function open(src) { boxImg.src = src; box.classList.remove('hidden'); box.classList.add('flex'); document.body.style.overflow = 'hidden'; }
+      function hide() { box.classList.add('hidden'); box.classList.remove('flex'); boxImg.src = ''; document.body.style.overflow = ''; }
+      document.querySelectorAll('.js-lightbox').forEach(function (el) {
+        el.addEventListener('click', function () { open(el.getAttribute('data-src')); });
+      });
+      close.addEventListener('click', hide);
+      box.addEventListener('click', function (e) { if (e.target === box) hide(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
+    })();
+  </script>
 
 </Layout>
