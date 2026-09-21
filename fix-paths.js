@@ -1,95 +1,63 @@
+/**
+ * Ajusta rutas absolutas del build para que incluyan la base del deploy.
+ *
+ * Antes este script convertía todo a rutas RELATIVAS (./ y ../) según la
+ * profundidad del archivo. Eso rompía la navegación cuando la URL se visitaba
+ * sin barra final: en /prueba/sponsors (sin "/") el navegador resuelve
+ * "../sponsors" contra /prueba/ y termina en /sponsors, fuera del subdirectorio.
+ *
+ * Ahora dejamos rutas ABSOLUTAS con la base (/prueba/...), que funcionan
+ * a cualquier profundidad y con o sin barra final.
+ */
 import { readdir, readFile, writeFile } from 'fs/promises';
-import { join, relative, dirname } from 'path';
+import { join } from 'path';
 
-function getRelativePath(fromFile, depth) {
-  // Calcular cuántos niveles subir según la profundidad del archivo
-  if (depth === 0) return './';
-  return '../'.repeat(depth);
-}
+const rawBase = process.env.BASE_PATH || '/';
+const base = ('/' + rawBase.replace(/^\/+|\/+$/g, '') + '/').replace(/^\/{2,}/, '/');
 
-function getDepth(filePath) {
-  // Contar cuántos niveles de profundidad tiene el archivo desde dist/
-  const relativePath = filePath.replace(/^\.\/dist\//, '').replace(/^dist\//, '');
-  const parts = relativePath.split('/');
-  return parts.length - 1; // -1 porque el último elemento es el archivo
-}
-
-async function fixPaths(dir, baseDir = './dist') {
+async function fixPaths(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
-  
+
   for (const entry of entries) {
     const fullPath = join(dir, entry.name);
-    
+
     if (entry.isDirectory()) {
-      await fixPaths(fullPath, baseDir);
-    } else if (entry.name.endsWith('.html') || entry.name.endsWith('.css')) {
-      let content = await readFile(fullPath, 'utf-8');
-      const depth = getDepth(fullPath);
-      const relativePrefix = getRelativePath(fullPath, depth);
-      
-      // Reemplazar rutas absolutas con relativas en atributos HTML
-      content = content.replace(/href="\/prueba\//g, `href="${relativePrefix}`);
-      content = content.replace(/src="\/prueba\//g, `src="${relativePrefix}`);
-      content = content.replace(/href="\/_astro\//g, `href="${relativePrefix}_astro/`);
-      content = content.replace(/src="\/_astro\//g, `src="${relativePrefix}_astro/`);
-      content = content.replace(/href="\/images\//g, `href="${relativePrefix}images/`);
-      content = content.replace(/src="\/images\//g, `src="${relativePrefix}images/`);
-      content = content.replace(/href="\/academia-dental/g, `href="${relativePrefix}academia-dental`);
-      content = content.replace(/src="\/academia-dental/g, `src="${relativePrefix}academia-dental`);
-      content = content.replace(/href="\/logo-/g, `href="${relativePrefix}logo-`);
-      content = content.replace(/src="\/logo-/g, `src="${relativePrefix}logo-`);
-      
-      // Reemplazar enlaces de navegación internos (href="/cursos" -> href="./cursos" o href="../cursos")
-      content = content.replace(/href="\/" /g, `href="${relativePrefix}" `); // Homepage link con espacio
-      content = content.replace(/href="\/">/g, `href="${relativePrefix}">`); // Homepage link con >
-      
-      // Links dinámicos a cursos y docentes con slugs
-      content = content.replace(/href="\/cursos\//g, `href="${relativePrefix}cursos/`);
-      content = content.replace(/href="\/docentes\//g, `href="${relativePrefix}docentes/`);
-      
-      // Links a páginas principales
-      content = content.replace(/href="\/cursos"/g, `href="${relativePrefix}cursos"`);
-      content = content.replace(/href="\/docentes"/g, `href="${relativePrefix}docentes"`);
-      content = content.replace(/href="\/metodologia"/g, `href="${relativePrefix}metodologia"`);
-      content = content.replace(/href="\/certificacion"/g, `href="${relativePrefix}certificacion"`);
-      content = content.replace(/href="\/contacto"/g, `href="${relativePrefix}contacto"`);
-      content = content.replace(/href="\/privacidad"/g, `href="${relativePrefix}privacidad"`);
-      content = content.replace(/href="\/terminos"/g, `href="${relativePrefix}terminos"`);
-      content = content.replace(/href="\/cursos\?/g, `href="${relativePrefix}cursos?`); // Links con query params
-      
-      // Reemplazar rutas en url() con comillas simples
-      content = content.replace(/url\('\/images\//g, `url('${relativePrefix}images/`);
-      content = content.replace(/url\('\/academia-dental/g, `url('${relativePrefix}academia-dental`);
-      content = content.replace(/url\('\/logo-/g, `url('${relativePrefix}logo-`);
-      content = content.replace(/url\('\/_astro\//g, `url('${relativePrefix}_astro/`);
-      
-      // Reemplazar rutas en url() con comillas dobles
-      content = content.replace(/url\("\/images\//g, `url("${relativePrefix}images/`);
-      content = content.replace(/url\("\/academia-dental/g, `url("${relativePrefix}academia-dental`);
-      content = content.replace(/url\("\/logo-/g, `url("${relativePrefix}logo-`);
-      content = content.replace(/url\("\/_astro\//g, `url("${relativePrefix}_astro/`);
-      
-      // Reemplazar rutas en url() sin comillas
-      content = content.replace(/url\(\/images\//g, `url(${relativePrefix}images/`);
-      content = content.replace(/url\(\/academia-dental/g, `url(${relativePrefix}academia-dental`);
-      content = content.replace(/url\(\/logo-/g, `url(${relativePrefix}logo-`);
-      content = content.replace(/url\(\/_astro\//g, `url(${relativePrefix}_astro/`);
-      
-      // Reemplazar rutas en atributos style inline (background-image, etc)
-      content = content.replace(/style="([^"]*?)url\('\/images\//g, `style="$1url('${relativePrefix}images/`);
-      content = content.replace(/style="([^"]*?)url\("\/images\//g, `style="$1url("${relativePrefix}images/`);
-      content = content.replace(/style="([^"]*?)url\(\/images\//g, `style="$1url(${relativePrefix}images/`);
-      
+      await fixPaths(fullPath);
+      continue;
+    }
+    if (!entry.name.endsWith('.html') && !entry.name.endsWith('.css')) continue;
+
+    let content = await readFile(fullPath, 'utf-8');
+    const before = content;
+
+    // 1) Rutas relativas heredadas -> absolutas con base (solo HTML; en CSS
+    //    las rutas relativas las resuelve el propio archivo y son válidas)
+    if (entry.name.endsWith('.html')) {
+      content = content.replace(/(href|src)="((?:\.\.\/)+|\.\/)(?!\/)/g, `$1="${base}`);
+      content = content.replace(/url\((['"]?)((?:\.\.\/)+|\.\/)(?!\/)/g, `url($1${base}`);
+    }
+
+    // 2) Rutas absolutas sin la base -> con base (no tocar // ni la base ya aplicada)
+    const escBase = base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const needsBase = new RegExp(`(href|src)="/(?!/|${escBase.slice(1)})`, 'g');
+    content = content.replace(needsBase, `$1="${base}`);
+    const needsBaseUrl = new RegExp(`url\\((['"]?)/(?!/|${escBase.slice(1)})`, 'g');
+    content = content.replace(needsBaseUrl, `url($1${base}`);
+
+    if (content !== before) {
       await writeFile(fullPath, content, 'utf-8');
-      const fileName = fullPath.split('/').pop();
-      console.log(`✓ Fixed (depth ${depth}, prefix: ${relativePrefix}): ${fileName}`);
+      console.log(`✓ ${fullPath}`);
     }
   }
 }
 
-fixPaths('./dist').then(() => {
-  console.log('✅ All paths fixed to relative!');
-}).catch(err => {
-  console.error('Error fixing paths:', err);
-  process.exit(1);
-});
+if (base === '/') {
+  console.log('ℹ️  BASE_PATH = / — no hay nada que ajustar.');
+} else {
+  fixPaths('./dist')
+    .then(() => console.log(`✅ Rutas absolutas con base ${base}`))
+    .catch((err) => {
+      console.error('Error fixing paths:', err);
+      process.exit(1);
+    });
+}
