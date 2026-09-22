@@ -1,8 +1,9 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
-// Local: sin base (localhost:4321/). En el deploy, GitHub Actions pasa
-// BASE_PATH=/prueba/ para que el sitio funcione en esa subcarpeta.
+// El sitio se sirve desde la raíz (academiadental.cl/) tanto en local como en
+// producción. Si alguna vez hay que desplegar en una subcarpeta, basta con
+// pasar BASE_PATH=/subcarpeta/ al build (ej. en GitHub Actions).
 export default defineConfig({
   integrations: [tailwind()],
   output: 'static',

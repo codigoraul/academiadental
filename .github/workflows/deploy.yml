@@ -28,8 +28,6 @@ jobs:
       
       - name: Build Astro site
         run: npm run build
-        env:
-          BASE_PATH: /prueba/
       
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
