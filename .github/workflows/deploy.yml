@@ -37,3 +37,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ./
           local-dir: dist/
+          timeout: 600000
+          log-level: verbose
