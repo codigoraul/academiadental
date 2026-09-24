@@ -14,6 +14,15 @@ const docente = await getDocenteBySlug(slug!);
 if (!docente) return Astro.redirect('/docentes');
 
 const acf = docente.acf ?? {};
+
+// Docentes cuya sección "Trayectoria" no se muestra (datos aún de plantilla)
+const SIN_TRAYECTORIA = ['pedro-saavedra', 'daniel-sanza', 'daniel-sanzana'];
+const nombreNormalizado = String(docente.title?.rendered ?? docente.title ?? '')
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const ocultarTrayectoria =
+  SIN_TRAYECTORIA.includes(String(slug)) ||
+  nombreNormalizado.includes('pedro saavedra') ||
+  nombreNormalizado.includes('daniel sanza');
 const nombre = docente.title?.rendered ?? docente.title ?? '';
 const foto = acf.foto?.url ?? getFeaturedImage(docente);
 
@@ -49,7 +58,7 @@ const cursosRelacionados = todosCursos.filter((c: any) => {
           </div>
         )}
 
-        {acf.experiencia && acf.experiencia.length > 0 && (
+        {!ocultarTrayectoria && acf.experiencia && acf.experiencia.length > 0 && (
           <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
             <h2 class="text-xl font-bold text-dark mb-6">Trayectoria</h2>
             <div class="space-y-4">
