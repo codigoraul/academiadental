@@ -1,7 +1,7 @@
 ---
 ---
 <footer class="text-white" style="background-color:#0B2447">
-  <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+  <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-10">
     <!-- Columna 1: Marca -->
     <div>
       <div class="mb-4">
@@ -25,7 +25,24 @@
       </ul>
     </div>
 
-    <!-- Columna 3: Contacto -->
+    <!-- Columna 3: Links relacionados -->
+    <div>
+      <h4 class="font-bold text-white text-lg mb-5">Links Relacionados</h4>
+      <ul class="space-y-3 text-base text-blue-100">
+        <li><a href={`${import.meta.env.BASE_URL}docentes`} class="hover:text-white transition-colors">Docentes</a></li>
+        <li><a href={`${import.meta.env.BASE_URL}metodologia`} class="hover:text-white transition-colors">Metodología</a></li>
+        <li><a href={`${import.meta.env.BASE_URL}certificacion`} class="hover:text-white transition-colors">Certificación</a></li>
+        <li><a href={`${import.meta.env.BASE_URL}sponsors`} class="hover:text-white transition-colors">Sponsors</a></li>
+        <li>
+          <a href="https://ortodonciaparatodos.cl" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 hover:text-white transition-colors">
+            ortodonciaparatodos.cl
+            <svg class="w-3.5 h-3.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H18v4.5M18 6l-7.5 7.5M16.5 13.5V18a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V9A1.5 1.5 0 0 1 6 7.5h4.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Columna 4: Contacto -->
     <div>
       <h4 class="font-bold text-white text-lg mb-5">Contacto</h4>
       <ul class="space-y-3 text-base text-blue-100">

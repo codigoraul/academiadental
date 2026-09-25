@@ -77,14 +77,15 @@ const initials = (name ?? '').split(' ').filter((w) => w.length > 2).slice(0, 2)
     display: block;
     position: relative;
     width: 100%;
-    height: 300px;
+    aspect-ratio: 600 / 733;
     overflow: hidden;
     flex-shrink: 0;
+    background: #0B1F45;
   }
   .photo-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center top;
     display: block;
     transition: transform 0.5s ease;
@@ -94,6 +95,9 @@ const initials = (name ?? '').split(' ').filter((w) => w.length > 2).slice(0, 2)
     box-shadow: 0 8px 16px rgba(4, 44, 83, 0.2);
   }
 
+  .teacher-card:hover .photo-img {
+    transform: scale(1.03);
+  }
   .photo-overlay {
     display: none;
   }
