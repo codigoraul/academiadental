@@ -41,6 +41,8 @@ jobs:
           lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" <<EOF
           set ftp:ssl-allow yes
           set ssl:verify-certificate no
+          set ssl:priority "NORMAL:-VERS-TLS1.3"
+          set ftp:ssl-protect-data yes
           set ftp:passive-mode yes
           set net:max-retries 5
           set net:reconnect-interval-base 5
