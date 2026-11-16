@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import CourseCard from '../components/CourseCard.astro';
 import { getCursoBySlug, getFeaturedImage } from '../lib/wp';
 import PreInscripcion from '../components/PreInscripcion.astro';
+import Testimonios from '../components/Testimonios.astro';
 
 const cursoDestacado = await getCursoBySlug('rehabilitacion-digital');
 const cursos = cursoDestacado ? [cursoDestacado] : [];
@@ -199,7 +200,7 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
       <div class="flex items-end justify-between mb-10">
         <div>
           <h2 class="text-3xl font-extrabold text-dark mb-2">Cursos 2026</h2>
-          <p class="text-gray-500">Nuestro próximo curso disponible.</p>
+          <p class="text-gray-500">Nuestro primer curso, realizado en noviembre de 2026.</p>
         </div>
         <a href={`${import.meta.env.BASE_URL}cursos`} class="hidden md:inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-secondary transition-colors">
           Ver todos <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -237,6 +238,8 @@ const cursos = cursoDestacado ? [cursoDestacado] : [];
       )}
     </div>
   </section>
+
+  <Testimonios />
 
   <PreInscripcion />
 

@@ -1,17 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
-import { getCursos, getCursoBySlug, getDocenteById, getFeaturedImage, toParagraphs } from '../../lib/wp';
+import { getCursos, getCursoBySlug, esCursoOculto, getDocenteById, getFeaturedImage, toParagraphs } from '../../lib/wp';
 
 export async function getStaticPaths() {
-  const cursos = await getCursos();
+  // Incluye los ocultos para que su URL antigua redirija a /cursos (el FTP no borra archivos viejos)
+  const cursos = await getCursos({}, { incluirOcultos: true });
   return cursos.map((curso: any) => ({ params: { slug: curso.slug } }));
 }
 
 const { slug } = Astro.params;
 const curso = await getCursoBySlug(slug!);
 
-if (!curso) return Astro.redirect('/cursos');
+if (!curso || esCursoOculto(curso)) return Astro.redirect(`${import.meta.env.BASE_URL}cursos`);
 
 const acf = curso.acf ?? {};
 const imagen = getFeaturedImage(curso);

@@ -24,13 +24,24 @@ async function ensureFeaturedMedia(posts: any[]): Promise<any[]> {
   return posts;
 }
 
-export async function getCursos(params: Record<string, string> = {}) {
+// Años de cursos ocultos temporalmente en el sitio (cambio de malla 2027).
+// Para volver a mostrarlos, dejar el arreglo vacío: []
+const ANIOS_OCULTOS = ['2027'];
+
+export function esCursoOculto(curso: any): boolean {
+  const fecha = String(curso?.acf?.fecha ?? '').trim();
+  return ANIOS_OCULTOS.some((anio) => fecha.startsWith(anio));
+}
+
+export async function getCursos(params: Record<string, string> = {}, opts: { incluirOcultos?: boolean } = {}) {
   try {
     const query = new URLSearchParams({ per_page: '100', _embed: '1', ...params });
     const res = await wpFetch(`${WP_API}/curso?${query}`);
     if (!res.ok) return [];
     const data = await res.json();
-    return Array.isArray(data) ? ensureFeaturedMedia(data) : [];
+    if (!Array.isArray(data)) return [];
+    const visibles = opts.incluirOcultos ? data : data.filter((c: any) => !esCursoOculto(c));
+    return ensureFeaturedMedia(visibles);
   } catch {
     return [];
   }
