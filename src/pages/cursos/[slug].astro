@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
+import Testimonios from '../../components/Testimonios.astro';
 import { getCursos, getCursoBySlug, esCursoOculto, getDocenteById, getFeaturedImage, toParagraphs } from '../../lib/wp';
 
 export async function getStaticPaths() {
@@ -185,6 +186,9 @@ const cursoSchema = {
             </div>
           </div>
         )}
+
+        <!-- Testimonios del curso realizado -->
+        {slug === 'rehabilitacion-digital' && <Testimonios variante="card" />}
 
         <!-- Material entregado -->
         {acf.material_entregado && acf.material_entregado.length > 0 && (

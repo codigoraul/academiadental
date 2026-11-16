@@ -1,70 +1,125 @@
 ---
-// Videos en public/videos/ — verticales (9:16), comprimidos para web, con póster .webp del mismo nombre
+// Testimonios del primer curso (Rehabilitación Digital, nov 2026).
+// Una tarjeta por persona; si la persona tiene varios clips, se reproducen seguidos en la misma tarjeta.
+// Videos en public/videos/ — verticales (9:16), comprimidos para web, con póster .webp del mismo nombre.
+// variante: 'section' (bloque de ancho completo) | 'card' (tarjeta dentro de la ficha del curso)
+// solo:     limita a un tipo ('Alumno' | 'Sponsor'), p. ej. en la página Sponsors
+interface Props {
+  variante?: 'section' | 'card';
+  solo?: 'Alumno' | 'Sponsor';
+  fondo?: string;
+}
+const { variante = 'section', solo, fondo = 'bg-white' } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const videos = [
-  { archivo: 'sponsor-3dental-1', tipo: 'Sponsor', quien: '3Dental Digital', frase: 'Este es un punto de partida: queremos seguir participando.' },
-  { archivo: 'sponsor-3dental-2', tipo: 'Sponsor', quien: '3Dental Digital', frase: 'Una tremenda experiencia. Se nota mucha práctica y vocación.' },
-  { archivo: 'alumno-1', tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', frase: 'Mostraron de principio a fin la realidad del día a día en la clínica.' },
-  { archivo: 'alumno-2', tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', frase: 'Me sorprendió el nivel de los expositores.' },
+
+const todas = [
+  {
+    tipo: 'Alumno',
+    quien: 'Curso Rehabilitación Digital',
+    frase: 'Me sorprendió el nivel de los expositores y ver la realidad clínica de principio a fin.',
+    clips: ['alumno-1', 'alumno-2'],
+  },
+  {
+    tipo: 'Sponsor',
+    quien: '3Dental Digital',
+    frase: 'Una tremenda experiencia. Queremos seguir participando en las próximas instancias.',
+    clips: ['sponsor-3dental-1', 'sponsor-3dental-2'],
+  },
 ];
+const personas = solo ? todas.filter((p) => p.tipo === solo) : todas;
+const esCard = variante === 'card';
+const titulo = solo === 'Sponsor' ? 'Lo que dicen nuestros sponsors' : 'Así se vivió nuestro primer curso';
+const bajada = solo === 'Sponsor'
+  ? 'Las marcas que nos acompañaron en nuestro primer curso, Rehabilitación Digital.'
+  : 'Las impresiones de un alumno y un sponsor que fueron parte de Rehabilitación Digital.';
 ---
 
-<!-- TESTIMONIOS PRIMER CURSO -->
-<section id="testimonios" class="py-20 px-6 bg-white">
-  <div class="max-w-7xl mx-auto">
-    <div class="max-w-2xl mx-auto text-center mb-12">
-      <span class="inline-block bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">Primer curso · Noviembre 2026</span>
-      <h2 class="text-3xl font-extrabold text-dark mb-4">Así se vivió nuestro primer curso</h2>
-      <p class="text-gray-500 leading-relaxed">Las impresiones de sponsors y alumnos que fueron parte de Rehabilitación Digital.</p>
-    </div>
-
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
-      {videos.map((v) => (
+{esCard ? (
+  <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
+    <h2 class="text-xl font-bold text-dark mb-1">Testimonios del curso</h2>
+    <p class="text-gray-500 text-sm mb-6">{bajada}</p>
+    <div class="grid grid-cols-2 gap-4 sm:gap-6 max-w-lg">
+      {personas.map((p) => (
         <figure class="group">
-          <div class="js-testimonio relative aspect-[9/16] rounded-2xl overflow-hidden bg-dark shadow-sm border border-light">
-            <video
-              class="absolute inset-0 w-full h-full object-cover"
-              src={`${base}videos/${v.archivo}.mp4`}
-              poster={`${base}videos/${v.archivo}.webp`}
-              preload="none"
-              playsinline
-              aria-label={`Testimonio ${v.tipo.toLowerCase()} — ${v.quien}`}
-            ></video>
-            <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent transition-opacity" aria-label={`Reproducir testimonio de ${v.tipo.toLowerCase()}`}>
+          <div class="js-testimonio relative aspect-[9/16] rounded-2xl overflow-hidden bg-dark shadow-sm border border-light" data-clips={JSON.stringify(p.clips.map((c) => `${base}videos/${c}.mp4`))}>
+            <video class="absolute inset-0 w-full h-full object-cover" src={`${base}videos/${p.clips[0]}.mp4`} poster={`${base}videos/${p.clips[0]}.webp`} preload="none" playsinline aria-label={`Testimonio ${p.tipo.toLowerCase()} — ${p.quien}`}></video>
+            <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent" aria-label={`Reproducir testimonio de ${p.tipo.toLowerCase()}`}>
               <span class="w-14 h-14 rounded-full bg-white/95 text-primary flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
                 <svg class="w-6 h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.2-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
               </span>
-              <span class="absolute left-3 top-3 bg-primary text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">{v.tipo}</span>
+              <span class="absolute left-3 top-3 bg-primary text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">{p.tipo}</span>
             </button>
           </div>
           <figcaption class="mt-3">
-            <p class="text-sm font-semibold text-dark leading-snug">“{v.frase}”</p>
-            <p class="text-xs text-gray-500 mt-1">{v.tipo} · {v.quien}</p>
+            <p class="text-sm font-semibold text-dark leading-snug">“{p.frase}”</p>
+            <p class="text-xs text-gray-500 mt-1">{p.tipo} · {p.quien}</p>
           </figcaption>
         </figure>
       ))}
     </div>
   </div>
-</section>
+) : (
+  <section id="testimonios" class={`py-20 px-6 ${fondo}`}>
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-2xl mx-auto text-center mb-12">
+        <span class="inline-block bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">Primer curso · Noviembre 2026</span>
+        <h2 class="text-3xl font-extrabold text-dark mb-4">{titulo}</h2>
+        <p class="text-gray-500 leading-relaxed">{bajada}</p>
+      </div>
+      <div class={`grid gap-4 sm:gap-8 mx-auto ${personas.length > 1 ? 'grid-cols-2 max-w-xl' : 'grid-cols-1 max-w-[280px]'}`}>
+        {personas.map((p) => (
+          <figure class="group">
+            <div class="js-testimonio relative aspect-[9/16] rounded-2xl overflow-hidden bg-dark shadow-sm border border-light" data-clips={JSON.stringify(p.clips.map((c) => `${base}videos/${c}.mp4`))}>
+              <video class="absolute inset-0 w-full h-full object-cover" src={`${base}videos/${p.clips[0]}.mp4`} poster={`${base}videos/${p.clips[0]}.webp`} preload="none" playsinline aria-label={`Testimonio ${p.tipo.toLowerCase()} — ${p.quien}`}></video>
+              <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent" aria-label={`Reproducir testimonio de ${p.tipo.toLowerCase()}`}>
+                <span class="w-14 h-14 rounded-full bg-white/95 text-primary flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                  <svg class="w-6 h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.2-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
+                </span>
+                <span class="absolute left-3 top-3 bg-primary text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">{p.tipo}</span>
+              </button>
+            </div>
+            <figcaption class="mt-3">
+              <p class="text-sm font-semibold text-dark leading-snug">“{p.frase}”</p>
+              <p class="text-xs text-gray-500 mt-1">{p.tipo} · {p.quien}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
 
 <script is:inline>
   (function () {
-    const items = document.querySelectorAll('.js-testimonio');
-    items.forEach(function (item) {
+    // Reproduce los clips de cada persona uno tras otro en la misma tarjeta
+    document.querySelectorAll('.js-testimonio').forEach(function (item) {
+      if (item.dataset.init) return;
+      item.dataset.init = '1';
       const video = item.querySelector('video');
       const btn = item.querySelector('.js-play');
       if (!video || !btn) return;
+      const clips = JSON.parse(item.dataset.clips || '[]');
+      const poster = video.getAttribute('poster');
+      let i = 0;
       btn.addEventListener('click', function () {
-        // Pausa los demás antes de reproducir este
-        items.forEach(function (o) { const ov = o.querySelector('video'); if (ov && ov !== video) ov.pause(); });
+        document.querySelectorAll('.js-testimonio video').forEach(function (ov) { if (ov !== video) ov.pause(); });
         video.controls = true;
         btn.classList.add('hidden');
         video.play();
       });
       video.addEventListener('ended', function () {
-        video.controls = false;
-        video.load(); // vuelve al póster
-        btn.classList.remove('hidden');
+        i++;
+        if (i < clips.length) {
+          video.removeAttribute('poster'); // evita el parpadeo del póster entre clips
+          video.src = clips[i];
+          video.play();
+        } else {
+          i = 0;
+          video.controls = false;
+          video.src = clips[0];
+          video.setAttribute('poster', poster);
+          btn.classList.remove('hidden');
+        }
       });
     });
   })();
