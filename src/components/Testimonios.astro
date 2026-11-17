@@ -14,6 +14,12 @@ const base = import.meta.env.BASE_URL;
 
 const todas = [
   {
+    tipo: 'Curso',
+    quien: 'Rehabilitación Digital',
+    frase: 'Clínica, práctica y docentes: así fue nuestro primer curso.',
+    clips: ['curso-rehabilitacion-digital'],
+  },
+  {
     tipo: 'Alumno',
     quien: 'Curso Rehabilitación Digital',
     frase: 'Me sorprendió el nivel de los expositores y ver la realidad clínica de principio a fin.',
@@ -27,23 +33,24 @@ const todas = [
   },
 ];
 const personas = solo ? todas.filter((p) => p.tipo === solo) : todas;
+const etiquetaAria = (p) => (p.tipo === 'Curso' ? `Video resumen del curso — ${p.quien}` : `Testimonio ${p.tipo.toLowerCase()} — ${p.quien}`);
 const esCard = variante === 'card';
 const titulo = solo === 'Sponsor' ? 'Lo que dicen nuestros sponsors' : 'Así se vivió nuestro primer curso';
 const bajada = solo === 'Sponsor'
   ? 'Las marcas que nos acompañaron en nuestro primer curso, Rehabilitación Digital.'
-  : 'Las impresiones de un alumno y un sponsor que fueron parte de Rehabilitación Digital.';
+  : 'Un resumen de Rehabilitación Digital y las impresiones de un alumno y un sponsor que participaron.';
 ---
 
 {esCard ? (
   <div class="bg-white rounded-2xl border border-light p-8 shadow-sm">
     <h2 class="text-xl font-bold text-dark mb-1">Testimonios del curso</h2>
     <p class="text-gray-500 text-sm mb-6">{bajada}</p>
-    <div class="grid grid-cols-2 gap-4 sm:gap-6 max-w-lg">
-      {personas.map((p) => (
-        <figure class="group">
+    <div class={`grid gap-4 sm:gap-6 ${personas.length > 2 ? 'grid-cols-2 sm:grid-cols-3 max-w-2xl' : 'grid-cols-2 max-w-lg'}`}>
+      {personas.map((p, i) => (
+        <figure class={`group ${personas.length === 3 && i === 2 ? 'col-span-2 w-[calc(50%-0.5rem)] mx-auto sm:col-span-1 sm:w-auto sm:mx-0' : ''}`}>
           <div class="js-testimonio relative aspect-[9/16] rounded-2xl overflow-hidden bg-dark shadow-sm border border-light" data-clips={JSON.stringify(p.clips.map((c) => `${base}videos/${c}.mp4`))}>
-            <video class="absolute inset-0 w-full h-full object-cover" src={`${base}videos/${p.clips[0]}.mp4`} poster={`${base}videos/${p.clips[0]}.webp`} preload="none" playsinline aria-label={`Testimonio ${p.tipo.toLowerCase()} — ${p.quien}`}></video>
-            <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent" aria-label={`Reproducir testimonio de ${p.tipo.toLowerCase()}`}>
+            <video class="absolute inset-0 w-full h-full object-cover" src={`${base}videos/${p.clips[0]}.mp4`} poster={`${base}videos/${p.clips[0]}.webp`} preload="none" playsinline aria-label={etiquetaAria(p)}></video>
+            <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent" aria-label={`Reproducir: ${etiquetaAria(p)}`}>
               <span class="w-14 h-14 rounded-full bg-white/95 text-primary flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
                 <svg class="w-6 h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.2-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
               </span>
@@ -66,12 +73,12 @@ const bajada = solo === 'Sponsor'
         <h2 class="text-3xl font-extrabold text-dark mb-4">{titulo}</h2>
         <p class="text-gray-500 leading-relaxed">{bajada}</p>
       </div>
-      <div class={`grid gap-4 sm:gap-8 mx-auto ${personas.length > 1 ? 'grid-cols-2 max-w-xl' : 'grid-cols-1 max-w-[280px]'}`}>
-        {personas.map((p) => (
-          <figure class="group">
+      <div class={`grid gap-4 sm:gap-8 mx-auto ${personas.length > 2 ? 'grid-cols-2 sm:grid-cols-3 max-w-4xl' : personas.length > 1 ? 'grid-cols-2 max-w-xl' : 'grid-cols-1 max-w-[280px]'}`}>
+        {personas.map((p, i) => (
+          <figure class={`group ${personas.length === 3 && i === 2 ? 'col-span-2 w-[calc(50%-0.5rem)] mx-auto sm:col-span-1 sm:w-auto sm:mx-0' : ''}`}>
             <div class="js-testimonio relative aspect-[9/16] rounded-2xl overflow-hidden bg-dark shadow-sm border border-light" data-clips={JSON.stringify(p.clips.map((c) => `${base}videos/${c}.mp4`))}>
-              <video class="absolute inset-0 w-full h-full object-cover" src={`${base}videos/${p.clips[0]}.mp4`} poster={`${base}videos/${p.clips[0]}.webp`} preload="none" playsinline aria-label={`Testimonio ${p.tipo.toLowerCase()} — ${p.quien}`}></video>
-              <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent" aria-label={`Reproducir testimonio de ${p.tipo.toLowerCase()}`}>
+              <video class="absolute inset-0 w-full h-full object-cover" src={`${base}videos/${p.clips[0]}.mp4`} poster={`${base}videos/${p.clips[0]}.webp`} preload="none" playsinline aria-label={etiquetaAria(p)}></video>
+              <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent" aria-label={`Reproducir: ${etiquetaAria(p)}`}>
                 <span class="w-14 h-14 rounded-full bg-white/95 text-primary flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
                   <svg class="w-6 h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.2-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z"/></svg>
                 </span>
