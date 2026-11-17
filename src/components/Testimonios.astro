@@ -25,6 +25,19 @@ const todas = [
     frase: 'Me sorprendió el nivel de los expositores y ver la realidad clínica de principio a fin.',
     clips: ['alumno-1', 'alumno-2'],
   },
+  // Alumnos del primer curso (videosTestimonios curso, nov 2026) — solo en el inicio
+  { tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', soloInicio: true, clips: ['alumno-8'],
+    frase: 'Vimos tres pacientes y todo el flujo digital, del escaneo al cementado.' },
+  { tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', soloInicio: true, clips: ['alumno-7'],
+    frase: 'Ver pacientes y tratamientos en vivo es algo que no se ve en todos los cursos.' },
+  { tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', soloInicio: true, clips: ['alumno-3'],
+    frase: 'Muy práctico: tallado, cementado de coronas y fresado de cerámica.' },
+  { tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', soloInicio: true, clips: ['alumno-4'],
+    frase: 'Muy metódicos y absolutamente recomendados.' },
+  { tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', soloInicio: true, clips: ['alumno-5'],
+    frase: 'Esencial para sumar el flujo digital a la clínica donde trabajo.' },
+  { tipo: 'Alumno', quien: 'Curso Rehabilitación Digital', soloInicio: true, clips: ['alumno-6'],
+    frase: 'Aprendí sobre flujos digitales y las herramientas de la odontología moderna.' },
   {
     tipo: 'Sponsor',
     quien: '3Dental Digital',
@@ -32,13 +45,17 @@ const todas = [
     clips: ['sponsor-3dental-1', 'sponsor-3dental-2'],
   },
 ];
-const personas = solo ? todas.filter((p) => p.tipo === solo) : todas;
 const etiquetaAria = (p) => (p.tipo === 'Curso' ? `Video resumen del curso — ${p.quien}` : `Testimonio ${p.tipo.toLowerCase()} — ${p.quien}`);
 const esCard = variante === 'card';
+const personas = todas
+  .filter((p) => !solo || p.tipo === solo)
+  .filter((p) => !(esCard && p.soloInicio));
 const titulo = solo === 'Sponsor' ? 'Lo que dicen nuestros sponsors' : 'Así se vivió nuestro primer curso';
 const bajada = solo === 'Sponsor'
   ? 'Las marcas que nos acompañaron en nuestro primer curso, Rehabilitación Digital.'
-  : 'Un resumen de Rehabilitación Digital y las impresiones de un alumno y un sponsor que participaron.';
+  : esCard
+    ? 'Un resumen de Rehabilitación Digital y las impresiones de un alumno y un sponsor que participaron.'
+    : 'Un resumen de Rehabilitación Digital y las impresiones de alumnos y sponsors que participaron.';
 ---
 
 {esCard ? (
@@ -73,9 +90,9 @@ const bajada = solo === 'Sponsor'
         <h2 class="text-3xl font-extrabold text-dark mb-4">{titulo}</h2>
         <p class="text-gray-500 leading-relaxed">{bajada}</p>
       </div>
-      <div class={`grid gap-4 sm:gap-8 mx-auto ${personas.length > 2 ? 'grid-cols-2 sm:grid-cols-3 max-w-4xl' : personas.length > 1 ? 'grid-cols-2 max-w-xl' : 'grid-cols-1 max-w-[280px]'}`}>
+      <div class={`flex flex-wrap justify-center gap-4 sm:gap-6 mx-auto ${personas.length > 4 ? 'max-w-7xl' : personas.length > 2 ? 'max-w-4xl' : personas.length > 1 ? 'max-w-xl' : 'max-w-[280px]'}`}>
         {personas.map((p, i) => (
-          <figure class={`group ${personas.length === 3 && i === 2 ? 'col-span-2 w-[calc(50%-0.5rem)] mx-auto sm:col-span-1 sm:w-auto sm:mx-0' : ''}`}>
+          <figure class={`group ${personas.length > 4 ? 'w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)] lg:w-[calc(20%-1.2rem)]' : personas.length > 2 ? 'w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)]' : personas.length > 1 ? 'w-[calc(50%-0.75rem)]' : 'w-full'}`}>
             <div class="js-testimonio relative aspect-[9/16] rounded-2xl overflow-hidden bg-dark shadow-sm border border-light" data-clips={JSON.stringify(p.clips.map((c) => `${base}videos/${c}.mp4`))}>
               <video class="absolute inset-0 w-full h-full object-cover" src={`${base}videos/${p.clips[0]}.mp4`} poster={`${base}videos/${p.clips[0]}.webp`} preload="none" playsinline aria-label={etiquetaAria(p)}></video>
               <button type="button" class="js-play absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/10 to-transparent" aria-label={`Reproducir: ${etiquetaAria(p)}`}>
